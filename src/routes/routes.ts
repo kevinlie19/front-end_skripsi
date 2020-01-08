@@ -1,8 +1,9 @@
-import { Home } from '../screens';
+import { Welcome, Home } from '../screens';
 
-const initialRoute = 'Home';
+const initialRoute = 'Welcome';
 
 const routes = {
+  Welcome,
   Home,
 };
 

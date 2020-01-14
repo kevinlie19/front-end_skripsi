@@ -12,10 +12,17 @@ export default function Login() {
   return (
     <View style={styles.flex}>
       <View style={styles.body}>
-        <Text weight="medium" style={styles.title}>
-          Masuk
-        </Text>
+        <View style={styles.navbar}>
+          <View />
+          <Text weight="medium" style={styles.title}>
+            Masuk
+          </Text>
+          <Text weight="bold" style={styles.daftar}>
+            Daftar
+          </Text>
+        </View>
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
           label="Alamat Email"
@@ -25,6 +32,7 @@ export default function Login() {
           keyboardType="email-address"
         />
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
           label="Kata Sandi"
@@ -38,16 +46,6 @@ export default function Login() {
             Masuk
           </Text>
         </Button>
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>Belum memiliki akun?</Text>
-          <Text
-            weight="bold"
-            style={styles.daftar}
-            onPress={() => navigate('Register')}
-          >
-            {'  Daftar'}
-          </Text>
-        </View>
       </View>
     </View>
   );
@@ -57,10 +55,14 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   title: {
+    marginLeft: 45,
     marginBottom: 36,
     fontSize: FONT_SIZE.large,
-    textAlign: 'center',
   },
   body: {
     flex: 5,
@@ -82,15 +84,8 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: FONT_SIZE.medium,
   },
-  bottomTextContainer: {
-    marginTop: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  bottomText: {
-    color: COLORS.darkWhite,
-  },
   daftar: {
+    fontSize: FONT_SIZE.medium,
     color: COLORS.primaryColor,
   },
 });

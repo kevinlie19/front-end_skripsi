@@ -12,10 +12,17 @@ export default function Register() {
   return (
     <View style={styles.flex}>
       <View style={styles.body}>
-        <Text weight="medium" style={styles.title}>
-          Daftar
-        </Text>
+        <View style={styles.navbar}>
+          <View />
+          <Text weight="medium" style={styles.title}>
+            Daftar
+          </Text>
+          <Text weight="bold" style={styles.masuk}>
+            Masuk
+          </Text>
+        </View>
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
           label="Nama"
@@ -23,6 +30,7 @@ export default function Register() {
           autoCapitalize="words"
         />
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
           label="Alamat Email"
@@ -32,6 +40,7 @@ export default function Register() {
           keyboardType="email-address"
         />
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
           label="Kata Sandi"
@@ -39,9 +48,10 @@ export default function Register() {
           secureTextEntry={true}
         />
         <TextInput
+          mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
-          label="Ketik Ulang Kata Sandi"
+          label="Ulangi Kata Sandi"
           textContentType="password"
           secureTextEntry={true}
         />
@@ -49,19 +59,9 @@ export default function Register() {
       <View style={styles.bottomContainer}>
         <Button style={styles.button} onPress={() => navigate('Login')}>
           <Text weight="medium" style={styles.text}>
-            Daftar
+            Buat Akun Baru
           </Text>
         </Button>
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.bottomText}>Sudah memiliki akun?</Text>
-          <Text
-            weight="bold"
-            style={styles.daftar}
-            onPress={() => navigate('Login')}
-          >
-            {'  Masuk'}
-          </Text>
-        </View>
       </View>
     </View>
   );
@@ -71,10 +71,14 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   title: {
+    marginLeft: 50,
     marginBottom: 36,
     fontSize: FONT_SIZE.large,
-    textAlign: 'center',
   },
   body: {
     flex: 5,
@@ -96,15 +100,8 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: FONT_SIZE.medium,
   },
-  bottomTextContainer: {
-    marginTop: 16,
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  bottomText: {
-    color: COLORS.darkWhite,
-  },
-  daftar: {
+  masuk: {
+    fontSize: FONT_SIZE.medium,
     color: COLORS.primaryColor,
   },
 });

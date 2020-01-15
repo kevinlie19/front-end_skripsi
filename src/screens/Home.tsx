@@ -16,11 +16,13 @@ export default function Home() {
         <IconButton
           icon="trending-up"
           color={COLORS.primaryColor}
+          size={30}
           onPress={() => navigate('Leaderboard')}
         />
         <IconButton
           icon="account-circle"
           color={COLORS.primaryColor}
+          size={30}
           onPress={() => navigate('MyProfile')}
         />
       </View>
@@ -58,13 +60,13 @@ const styles = StyleSheet.create({
   },
   navbar: {
     flex: 1,
-    marginTop: 30,
+    marginTop: 35,
     paddingHorizontal: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   body: {
-    flex: 5,
+    flex: 12,
   },
   image: {
     width: 300,

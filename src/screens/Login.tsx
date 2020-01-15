@@ -17,7 +17,11 @@ export default function Login() {
           <Text weight="medium" style={styles.title}>
             Masuk
           </Text>
-          <Text weight="bold" style={styles.daftar}>
+          <Text
+            weight="bold"
+            style={styles.daftar}
+            onPress={() => navigate('Register')}
+          >
             Daftar
           </Text>
         </View>
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    marginLeft: 45,
+    marginLeft: 48,
     marginBottom: 36,
     fontSize: FONT_SIZE.large,
   },

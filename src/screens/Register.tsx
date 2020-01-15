@@ -17,7 +17,11 @@ export default function Register() {
           <Text weight="medium" style={styles.title}>
             Daftar
           </Text>
-          <Text weight="bold" style={styles.masuk}>
+          <Text
+            weight="bold"
+            style={styles.masuk}
+            onPress={() => navigate('Login')}
+          >
             Masuk
           </Text>
         </View>

@@ -1,18 +1,49 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Text, IconButton } from 'exoflex';
+import { useNavigation } from 'naviflex';
+
+import { COLORS } from '../constants/colors';
+import { FONT_SIZE } from '../constants/fonts';
 
 export default function Leaderboard() {
+  let { navigate } = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text>Welcome to the Leaderboard Scene</Text>
+    <View style={styles.flex}>
+      <View style={styles.navbar}>
+        <IconButton
+          icon="arrow-left"
+          color={COLORS.primaryColor}
+          onPress={() => navigate('Home')}
+        />
+        <Text weight="medium" style={styles.title}>
+          Peringkat
+        </Text>
+        <View />
+      </View>
+      <View style={styles.body}></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
-    justifyContent: 'center',
+  },
+  navbar: {
+    marginTop: 35,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  title: {
+    marginRight: 42,
+    marginBottom: 8,
+    fontSize: FONT_SIZE.large,
+  },
+  body: {
+    flex: 5,
   },
 });

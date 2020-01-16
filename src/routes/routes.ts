@@ -6,6 +6,9 @@ import {
   Home,
   Leaderboard,
   MyProfile,
+  AvatarCollection,
+  BadgeCollection,
+  About,
 } from '../screens';
 
 const initialRoute = 'Splash';
@@ -18,6 +21,9 @@ const routes = {
   Home,
   Leaderboard,
   MyProfile,
+  AvatarCollection,
+  BadgeCollection,
+  About,
 };
 
 export { initialRoute, routes };

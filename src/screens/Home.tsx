@@ -41,7 +41,7 @@ export default function Home() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.playButton}
-            onPress={() => navigate('Home')}
+            onPress={() => navigate('Home')} // TODO: Change to Quiz Route
           >
             <IconButton icon="play" color={COLORS.white} size={35} />
           </TouchableOpacity>

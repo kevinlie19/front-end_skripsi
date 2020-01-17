@@ -11,7 +11,8 @@
     "lint": "eslint --max-warnings 0 \"src/**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit -p .",
     "jest": "jest --coverage --passWithNoTests",
-    "test": "yarn lint && yarn typecheck && yarn format:check && yarn jest"
+    "test": "yarn lint && yarn typecheck && yarn format:check && yarn jest",
+    "generate": "apollo codegen:generate --endpoint=https://back-end-skripsi.herokuapp.com/ --target=typescript --includes=src/graphql/**/*.ts --tagName=gql --outputFlat src/generated"
   },
   "prettier": {
     "bracketSpacing": true,

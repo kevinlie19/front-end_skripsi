@@ -1,32 +1,75 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
-import { Text, TextInput, Button, Modal, ActivityIndicator } from 'exoflex';
+import {
+  Text,
+  TextInput,
+  Button,
+  Modal,
+  ActivityIndicator,
+  Portal,
+} from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation } from '@apollo/react-hooks';
 
 import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';
 import { LOGIN_USER } from '../graphql/mutations/loginMutation';
-import { Login_login, LoginVariables } from '../generated/Login';
+import { Login, LoginVariables } from '../generated/Login';
 import { validateEmail, validatePassword } from '../helpers/validation';
+import asyncStorage from '../helpers/asyncStorage';
+import { SET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
+import {
+  SetLocalState,
+  SetLocalStateVariables,
+} from '../generated/local/SetLocalState';
 
-export default function Login() {
+export default function LoginScene() {
   let { navigate } = useNavigation();
   let [emailValue, setEmailValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
 
-  const [login, { loading: loadingLogin }] = useMutation<
-    Login_login,
-    LoginVariables
-  >(LOGIN_USER, {
-    onCompleted() {
-      navigate('Home');
+  let [setLocalState] = useMutation<SetLocalState, SetLocalStateVariables>(
+    SET_LOCAL_STATE,
+    {
+      onCompleted: () => {
+        navigate('Home');
+        setEmailValue('');
+        setPasswordValue('');
+      },
+      onError: (error) => {
+        Alert.alert(error.message, 'Please try again', [{ text: 'OK' }], {
+          cancelable: false,
+        });
+      },
     },
-    onError(error) {
-      let newError = error.message.split(':');
-      Alert.alert(newError[1]);
+  );
+
+  const [login, { loading: loadingLogin }] = useMutation<Login, LoginVariables>(
+    LOGIN_USER,
+    {
+      onCompleted({ login }) {
+        if (login.token && login.user) {
+          asyncStorage.saveToken(login.token);
+          setLocalState({
+            variables: { user: login.user },
+          });
+        } else {
+          Alert.alert(
+            'Unexpected Error',
+            'Please try again',
+            [{ text: 'OK' }],
+            {
+              cancelable: false,
+            },
+          );
+        }
+      },
+      onError(error) {
+        let newError = error.message.split(':');
+        Alert.alert(newError[1]);
+      },
     },
-  });
+  );
 
   let onPressLogin = async () => {
     if (validateEmail(emailValue) && validatePassword(passwordValue)) {
@@ -59,16 +102,15 @@ export default function Login() {
 
   return (
     <View style={styles.flex}>
-      <Modal
-        contentContainerStyle={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        animationType="fade"
-        visible={loadingLogin}
-      >
-        <ActivityIndicator size="large" color={COLORS.primaryColor} />
-      </Modal>
+      <Portal>
+        <Modal
+          contentContainerStyle={styles.modal}
+          animationType="fade"
+          visible={loadingLogin}
+        >
+          <ActivityIndicator size="large" color={COLORS.primaryColor} />
+        </Modal>
+      </Portal>
       <View style={styles.body}>
         <View style={styles.navbar}>
           <View />
@@ -120,6 +162,11 @@ export default function Login() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   navbar: {
     flexDirection: 'row',

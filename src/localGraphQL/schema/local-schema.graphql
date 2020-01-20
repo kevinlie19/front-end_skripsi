@@ -1,0 +1,17 @@
+type User {
+  id: String!
+  name: String!
+}
+
+input UserInput {
+  id: String!
+  name: String!
+}
+
+type Query {
+  user: UserInput!
+}
+
+type Mutation {
+  setLocalState(user: UserInput!): UserInput!
+}

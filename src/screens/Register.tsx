@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
-import { Text, TextInput, Button, Modal, ActivityIndicator } from 'exoflex';
+import {
+  Text,
+  TextInput,
+  Button,
+  Modal,
+  ActivityIndicator,
+  Portal,
+} from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation } from '@apollo/react-hooks';
 
 import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';
 import { REGISTER_USER } from '../graphql/mutations/registerMutation';
-import { Register_register, RegisterVariables } from '../generated/Register';
+import { Register, RegisterVariables } from '../generated/Register';
 import { validateEmail, validatePassword } from '../helpers/validation';
 
-export default function Register() {
+export default function RegisterScene() {
   let { navigate } = useNavigation();
   let [nameValue, setNameValue] = useState('');
   let [emailValue, setEmailValue] = useState('');
@@ -18,11 +25,15 @@ export default function Register() {
   let [rePasswordValue, setRePasswordValue] = useState('');
 
   const [register, { loading: loadingRegister }] = useMutation<
-    Register_register,
+    Register,
     RegisterVariables
   >(REGISTER_USER, {
     onCompleted() {
       navigate('Login');
+      setNameValue('');
+      setEmailValue('');
+      setPasswordValue('');
+      setRePasswordValue('');
     },
     onError(error) {
       let newError = error.message.split(':');
@@ -63,16 +74,15 @@ export default function Register() {
 
   return (
     <View style={styles.flex}>
-      <Modal
-        contentContainerStyle={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        animationType="fade"
-        visible={loadingRegister}
-      >
-        <ActivityIndicator size="large" color={COLORS.primaryColor} />
-      </Modal>
+      <Portal>
+        <Modal
+          contentContainerStyle={styles.modal}
+          animationType="fade"
+          visible={loadingRegister}
+        >
+          <ActivityIndicator size="large" color={COLORS.primaryColor} />
+        </Modal>
+      </Portal>
       <View style={styles.body}>
         <View style={styles.navbar}>
           <View />
@@ -106,7 +116,6 @@ export default function Register() {
           onChangeText={setEmailValue}
           textContentType="emailAddress"
           autoCapitalize="none"
-          autoFocus={true}
           keyboardType="email-address"
         />
         <TextInput
@@ -144,6 +153,11 @@ export default function Register() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   navbar: {
     flexDirection: 'row',

@@ -1,23 +1,29 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, ImageBackground } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import { useNavigation } from 'naviflex';
+
+import asyncStorage from '../helpers/asyncStorage';
 
 export default function Splash() {
   let { navigate } = useNavigation();
   const src = require('../../assets/images/splash.jpg');
 
   let timeOut = () => {
-    setTimeout(() => {
-      navigate('Welcome');
+    setTimeout(async () => {
+      if (await asyncStorage.getToken()) {
+        navigate('Home');
+      } else {
+        navigate('Welcome');
+      }
     }, 2000);
   };
 
   timeOut();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground source={src} style={styles.image} />
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   ActivityIndicator,
+  Avatar,
 } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -18,7 +19,7 @@ import {
 } from '../generated/UpdateProfile';
 import { UPDATE_PROFILE } from '../graphql/mutations/updateProfileMutation';
 import { MyProfile } from '../generated/MyProfile';
-import { MY_PROFILE } from '../graphql/queries/myProfileMutation';
+import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import { GetLocalState } from '../generated/local/GetLocalState';
 import { GET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
 
@@ -94,6 +95,16 @@ export default function EditProfile() {
             <View style={styles.flex} />
           </View>
           <View style={styles.body}>
+            <View style={styles.avatarContainer}>
+              <Avatar.Image />
+              <Text
+                weight="medium"
+                style={styles.gantiAvatar}
+                onPress={() => navigate('AvatarCollection')}
+              >
+                Ganti Avatar
+              </Text>
+            </View>
             <TextInput
               mode="flat"
               style={styles.flex}
@@ -158,8 +169,15 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 5,
-    paddingTop: 30,
+    paddingTop: 20,
     paddingHorizontal: 24,
+  },
+  avatarContainer: {
+    alignItems: 'center',
+  },
+  gantiAvatar: {
+    marginTop: 10,
+    color: COLORS.primaryColor,
   },
   textInput: {
     marginBottom: 24,

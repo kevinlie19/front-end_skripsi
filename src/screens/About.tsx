@@ -20,7 +20,7 @@ export default function About() {
           />
         </View>
         <Text weight="medium" style={styles.title}>
-          About
+          Tentang Aplikasi
         </Text>
         <View style={styles.flex} />
       </View>
@@ -33,20 +33,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   navbar: {
-    marginTop: 25,
+    marginTop: 35,
     paddingLeft: 8,
+    marginBottom: 24,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   backIconContainer: {
     flex: 1,
     alignItems: 'flex-start',
-    marginTop: 12,
   },
   title: {
     flex: 1,
-    marginLeft: 17,
+    paddingBottom: 5,
     fontSize: FONT_SIZE.large,
     textAlign: 'center',
   },

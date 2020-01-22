@@ -9,7 +9,7 @@ import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import asyncStorage from '../helpers/asyncStorage';
 import { MyProfile } from '../generated/MyProfile';
-import { MY_PROFILE } from '../graphql/queries/myProfileMutation';
+import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import {
   SetLocalState,
   SetLocalStateVariables,
@@ -71,6 +71,7 @@ export default function MyProfileScene() {
         <View style={styles.profileInfoContainer}>
           <Avatar.Image
             source={{ uri: data.myProfile.avatar?.image ?? avatarSrc }}
+            onPress={() => navigate('AvatarCollection')}
           />
           <View>
             <Text weight="medium" style={styles.fontMedium}>
@@ -99,7 +100,7 @@ export default function MyProfileScene() {
               style={styles.fontMedium}
               onPress={() => navigate('BadgeCollection')}
             >
-              Koleksi Badge
+              Koleksi Lencana
             </Text>
           </View>
           <View style={styles.menuContainer}>

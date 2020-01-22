@@ -17,7 +17,7 @@ import { useDimensions } from '../helpers/useDimensions';
 export default function Welcome() {
   let { navigate } = useNavigation();
   let widthScreen = useDimensions();
-  let src = require('../../assets/images/welcomeAsset.png');
+  let src = require('../../assets/images/welcome.png');
 
   let buttonDefaultStyle = {
     minWidth: 120,
@@ -44,7 +44,7 @@ export default function Welcome() {
           onPress={() => navigate('Login')}
         >
           <Text weight="bold" style={styles.buttonText}>
-            Login
+            Masuk
           </Text>
         </Button>
         <View style={styles.buttonSeparator} />
@@ -53,7 +53,7 @@ export default function Welcome() {
           onPress={() => navigate('Register')}
         >
           <Text weight="bold" style={styles.buttonText}>
-            Register
+            Daftar
           </Text>
         </Button>
       </View>
@@ -73,16 +73,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    marginBottom: 120,
+    marginBottom: 70,
     fontSize: FONT_SIZE.xLarge,
   },
   imageWelcome: {
     aspectRatio: 1,
-    width: 200,
+    width: 250,
     height: undefined,
   },
   bottomContainer: {
-    marginBottom: 36,
+    marginBottom: 16,
   },
   buttonSeparator: {
     height: 16,

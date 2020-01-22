@@ -13,7 +13,7 @@
     "jest": "jest --coverage --passWithNoTests",
     "test": "yarn lint && yarn typecheck && yarn format:check && yarn jest",
     "generate": "apollo codegen:generate --endpoint=https://back-end-skripsi.herokuapp.com/ --target=typescript --includes=src/graphql/**/*.ts --tagName=gql --outputFlat src/generated",
-    "local": "apollo client:codegen src/generated/local --target typescript --includes=src/localGraphQL/userDataQuery.ts --tagName gql --localSchemaFile=src/localGraphQL/local/schema/local-schema.graphql --outputFlat"
+    "local": "apollo client:codegen src/generated/local --target typescript --includes=src/localGraphQL/userDataQuery.ts --tagName gql --localSchemaFile=src/localGraphQL/schema/local-schema.graphql --outputFlat"
   },
   "prettier": {
     "bracketSpacing": true,

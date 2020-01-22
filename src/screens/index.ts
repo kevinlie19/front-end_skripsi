@@ -5,6 +5,7 @@ import Register from './Register';
 import Home from './Home';
 import Leaderboard from './Leaderboard';
 import MyProfile from './MyProfile';
+import EditProfile from './EditProfile';
 import AvatarCollection from './AvatarCollection';
 import BadgeCollection from './BadgeCollection';
 import About from './About';
@@ -17,6 +18,7 @@ export {
   Home,
   Leaderboard,
   MyProfile,
+  EditProfile,
   AvatarCollection,
   BadgeCollection,
   About,

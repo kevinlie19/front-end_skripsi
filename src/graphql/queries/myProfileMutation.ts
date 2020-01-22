@@ -22,6 +22,19 @@ export const MY_PROFILE = gql`
       }
       highestScore
       point
+      exams {
+        id
+        choices {
+          id
+          question {
+            id
+            description
+            category
+          }
+          answer
+          correct
+        }
+      }
       createdAt
     }
   }

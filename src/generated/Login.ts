@@ -8,7 +8,9 @@
 
 export interface Login_login_user {
   __typename: "User";
+  id: string;
   name: string;
+  email: string;
 }
 
 export interface Login_login {

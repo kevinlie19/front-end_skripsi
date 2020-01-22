@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Text, IconButton, Avatar, ActivityIndicator } from 'exoflex';
 import { useNavigation } from 'naviflex';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import dateFormat from 'dateformat';
 
 import { COLORS } from '../constants/colors';
@@ -10,6 +10,11 @@ import { FONT_SIZE } from '../constants/fonts';
 import asyncStorage from '../helpers/asyncStorage';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileMutation';
+import {
+  SetLocalState,
+  SetLocalStateVariables,
+} from '../generated/local/SetLocalState';
+import { SET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
 
 export default function MyProfileScene() {
   let { navigate } = useNavigation();
@@ -18,6 +23,26 @@ export default function MyProfileScene() {
   let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
     fetchPolicy: 'network-only',
   });
+
+  let [setLocalState] = useMutation<SetLocalState, SetLocalStateVariables>(
+    SET_LOCAL_STATE,
+    {
+      onCompleted: () => {
+        navigate('EditProfile');
+      },
+      onError: (error) => {
+        Alert.alert(error.message, 'Please try again', [{ text: 'OK' }], {
+          cancelable: false,
+        });
+      },
+    },
+  );
+
+  let onPressEdit = async () => {
+    await setLocalState({
+      variables: { user: data?.myProfile ?? { id: '', name: '', email: '' } },
+    });
+  };
 
   if (loading || !data) {
     return (
@@ -29,12 +54,13 @@ export default function MyProfileScene() {
     return (
       <View style={styles.flex}>
         <View style={styles.navbar}>
-          <IconButton
-            icon="arrow-left"
-            color={COLORS.primaryColor}
-            style={styles.backIcon}
-            onPress={() => navigate('Home')}
-          />
+          <View style={styles.backIconContainer}>
+            <IconButton
+              icon="arrow-left"
+              color={COLORS.primaryColor}
+              onPress={() => navigate('Home')}
+            />
+          </View>
           <Text weight="medium" style={styles.title}>
             Profil Saya
           </Text>
@@ -55,7 +81,11 @@ export default function MyProfileScene() {
               Registered on {dateFormat(data.myProfile.createdAt, 'dd/mm/yyyy')}
             </Text>
           </View>
-          <IconButton icon="pencil" color={COLORS.primaryColor} />
+          <IconButton
+            icon="pencil"
+            color={COLORS.primaryColor}
+            onPress={onPressEdit}
+          />
         </View>
         <View style={styles.body}>
           <View style={styles.menuContainer}>
@@ -83,7 +113,7 @@ export default function MyProfileScene() {
               style={styles.fontMedium}
               onPress={() => navigate('About')}
             >
-              About
+              Tentang Aplikasi
             </Text>
           </View>
           <View style={styles.menuContainer}>
@@ -100,7 +130,7 @@ export default function MyProfileScene() {
                 navigate('Welcome');
               }}
             >
-              Log Out
+              Keluar
             </Text>
           </View>
         </View>
@@ -128,13 +158,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  backIcon: {
+  backIconContainer: {
     flex: 1,
+    paddingTop: 5,
     alignItems: 'flex-start',
-    marginTop: 12,
   },
   title: {
     flex: 1,
+    marginLeft: 15,
     fontSize: FONT_SIZE.large,
     textAlign: 'center',
   },

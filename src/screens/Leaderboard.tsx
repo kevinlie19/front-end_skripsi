@@ -12,17 +12,26 @@ export default function Leaderboard() {
   return (
     <View style={styles.flex}>
       <View style={styles.navbar}>
-        <IconButton
-          icon="arrow-left"
-          color={COLORS.primaryColor}
-          onPress={() => navigate('Home')}
-        />
+        <View style={styles.backIconContainer}>
+          <IconButton
+            icon="arrow-left"
+            color={COLORS.primaryColor}
+            onPress={() => navigate('Home')}
+          />
+        </View>
         <Text weight="medium" style={styles.title}>
           Peringkat
         </Text>
-        <View />
+        <View style={styles.flex} />
       </View>
-      <View style={styles.body}></View>
+      <View style={styles.body}>
+        {/* <FlatList
+          showsVerticalScrollIndicator={false}
+          data={}
+          renderItem={({ item }) => {}}
+          keyExtractor={(item) => item.id}
+        /> */}
+      </View>
     </View>
   );
 }
@@ -38,10 +47,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  backIconContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
   title: {
-    marginRight: 42,
-    marginBottom: 8,
+    flex: 1,
+    paddingBottom: 5,
     fontSize: FONT_SIZE.large,
+    textAlign: 'center',
   },
   body: {
     flex: 5,

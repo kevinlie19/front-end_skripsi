@@ -22,9 +22,10 @@ import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import { GetLocalState } from '../generated/local/GetLocalState';
 import { GET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
+import { Avatars } from '../constants/avatars';
 
 export default function EditProfile() {
-  let { navigate } = useNavigation();
+  let { navigate, getParam } = useNavigation();
 
   let { data: userData } = useQuery<GetLocalState>(GET_LOCAL_STATE);
 
@@ -43,16 +44,19 @@ export default function EditProfile() {
       let [nameValue, setNameValue] = useState(name);
       let [emailValue, setEmailValue] = useState(email);
 
-      let { loading } = useQuery<MyProfile>(MY_PROFILE, {
-        fetchPolicy: 'network-only',
-      });
+      let { loading, data: userAvatarData, refetch } = useQuery<MyProfile>(
+        MY_PROFILE,
+        {
+          fetchPolicy: 'network-only',
+        },
+      );
 
       const [updateProfile, { loading: loadingUpdate }] = useMutation<
         UpdateProfile,
         UpdateProfileVariables
       >(UPDATE_PROFILE, {
         onCompleted() {
-          navigate('MyProfile');
+          navigate('MyProfile', { from: 'EditProfile' });
           setNameValue('');
           setEmailValue('');
         },
@@ -79,6 +83,10 @@ export default function EditProfile() {
         );
       }
 
+      if (getParam('from') === 'AvatarCollection') {
+        refetch();
+      }
+
       return (
         <View style={styles.flex}>
           <View style={styles.navbar}>
@@ -86,7 +94,11 @@ export default function EditProfile() {
               <IconButton
                 icon="arrow-left"
                 color={COLORS.primaryColor}
-                onPress={() => navigate('MyProfile')}
+                onPress={() =>
+                  navigate('MyProfile', {
+                    from: 'EditProfile',
+                  })
+                }
               />
             </View>
             <Text weight="medium" style={styles.title}>
@@ -96,7 +108,14 @@ export default function EditProfile() {
           </View>
           <View style={styles.body}>
             <View style={styles.avatarContainer}>
-              <Avatar.Image />
+              <Avatar.Image
+                style={styles.avatar}
+                size={96}
+                source={
+                  Avatars[Number(userAvatarData?.myProfile.avatar?.image ?? 0)]
+                    .src
+                }
+              />
               <Text
                 weight="medium"
                 style={styles.gantiAvatar}
@@ -174,6 +193,9 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     alignItems: 'center',
+  },
+  avatar: {
+    backgroundColor: COLORS.white,
   },
   gantiAvatar: {
     marginTop: 10,

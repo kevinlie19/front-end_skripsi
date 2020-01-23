@@ -7,13 +7,9 @@
 //==============================================================
 
 export enum QuestionEnum {
-  Bruised = "Bruised",
-  Burns = "Burns",
-  CPR = "CPR",
-  Cramps = "Cramps",
-  Impaled = "Impaled",
-  NoseBleed = "NoseBleed",
-  OpenWound = "OpenWound",
+  Paket1 = "Paket1",
+  Paket2 = "Paket2",
+  Paket3 = "Paket3",
 }
 
 //==============================================================

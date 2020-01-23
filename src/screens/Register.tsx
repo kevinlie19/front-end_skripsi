@@ -48,7 +48,6 @@ export default function RegisterScene() {
           name: nameValue,
           email: emailValue,
           password: passwordValue,
-          avatarId: 'ck5hvr6pixpkm0b00p8py21tp',
         },
       });
     } else if (!validateEmail(emailValue)) {

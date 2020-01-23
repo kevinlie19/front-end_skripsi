@@ -4,6 +4,7 @@ import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 
+import { Avatars } from '../constants/avatars';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import { Leaderboard } from '../generated/Leaderboard';
@@ -49,7 +50,7 @@ export default function LeaderboardScene() {
                   <View style={styles.flex}>
                     <Avatar.Image
                       style={styles.avatar}
-                      source={{ uri: item.avatar?.image ?? '' }}
+                      source={Avatars[Number(item.avatar?.image ?? 0)].src}
                     />
                   </View>
                   <Text weight="medium" style={styles.flex}>
@@ -114,6 +115,9 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginLeft: 29,
+    backgroundColor: COLORS.white,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   score: {
     flex: 1,

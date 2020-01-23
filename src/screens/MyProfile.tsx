@@ -5,6 +5,7 @@ import { useNavigation } from 'naviflex';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import dateFormat from 'dateformat';
 
+import { Avatars } from '../constants/avatars';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import asyncStorage from '../helpers/asyncStorage';
@@ -17,10 +18,10 @@ import {
 import { SET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
 
 export default function MyProfileScene() {
-  let { navigate } = useNavigation();
-  let avatarSrc = require('../../assets/images/home.png');
+  let { navigate, getParam } = useNavigation();
+  let avatarSrc = require('../../assets/avatars/avatarDefault.png');
 
-  let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
+  let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
     fetchPolicy: 'network-only',
   });
 
@@ -51,6 +52,9 @@ export default function MyProfileScene() {
       </View>
     );
   } else {
+    if (getParam('from') === 'EditProfile') {
+      refetch();
+    }
     return (
       <View style={styles.flex}>
         <View style={styles.navbar}>
@@ -70,7 +74,8 @@ export default function MyProfileScene() {
         </View>
         <View style={styles.profileInfoContainer}>
           <Avatar.Image
-            source={{ uri: data.myProfile.avatar?.image ?? avatarSrc }}
+            style={styles.avatar}
+            source={Avatars[Number(data.myProfile.avatar?.image ?? 0)].src}
             onPress={() => navigate('AvatarCollection')}
           />
           <View>
@@ -185,6 +190,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  avatar: {
+    backgroundColor: COLORS.white,
   },
   fontMedium: {
     fontSize: FONT_SIZE.medium,

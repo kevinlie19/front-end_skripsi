@@ -73,8 +73,8 @@ export default function AvatarCollection() {
       });
     } else {
       Alert.alert(
-        'Coins is not enough',
-        'Play the quiz to earn more coins',
+        'Tidak punya cukup koin',
+        'Selesaikanlah sebuah paket soal untuk mendapatkan koin',
         [{ text: 'OK' }],
         {
           cancelable: false,
@@ -99,11 +99,6 @@ export default function AvatarCollection() {
     );
   }
 
-  // let card = {
-  //   borderWidth: 1,
-  //   borderColor: isActive ? 'blue' : 'black',
-  // } as StyleProp<ViewStyle>;
-
   return (
     <View style={styles.flex}>
       <View style={styles.navbar}>
@@ -117,85 +112,83 @@ export default function AvatarCollection() {
         <Text weight="medium" style={styles.title}>
           Pilih Avatar
         </Text>
-        <View style={styles.flex} />
+        <Text weight="medium" style={styles.points}>
+          {profileData.myProfile.point} koin
+        </Text>
       </View>
       <View style={styles.body}>
-        <View style={styles.avatarContainer}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentInsetAdjustmentBehavior="always"
-            data={avatarData.avatars}
-            renderItem={({ item, index }) => {
-              return (
-                <View style={styles.contentContainer} key={index}>
-                  <Avatar.Image
-                    style={styles.avatar}
-                    source={AllAvatars[Number(item.image)].src}
-                  />
-                  <View style={styles.marginLeft}>
-                    <Text style={styles.avatarName} weight="medium">
-                      {AllAvatars[index + 1].name}
-                    </Text>
-                    <View style={styles.coins}>
-                      <View style={styles.yellowCoin} />
-                      <Text>{item.price}</Text>
-                    </View>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          contentInsetAdjustmentBehavior="always"
+          data={avatarData.avatars}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={styles.contentContainer} key={index}>
+                <Avatar.Image
+                  style={styles.avatar}
+                  source={AllAvatars[Number(item.image)].src}
+                />
+                <View style={styles.marginLeft}>
+                  <Text style={styles.avatarName} weight="medium">
+                    {AllAvatars[index].name}
+                  </Text>
+                  <View style={styles.coins}>
+                    <View style={styles.yellowCoin} />
+                    <Text>{item.price}</Text>
                   </View>
-                  {profileData?.myProfile.avatarCollection?.find(
-                    (element) => item.id === element.id,
-                  ) ? (
-                    profileData.myProfile.avatar?.id === item.id ? (
-                      <View style={styles.buyTextContainer}>
-                        {loadingUpdateProfile ||
-                        loadingAddToAvatarCollection ? (
-                          <ActivityIndicator />
-                        ) : (
-                          <IconButton
-                            icon="check-circle-outline"
-                            color={COLORS.marigold}
-                            style={styles.icon}
-                          />
-                        )}
-                      </View>
-                    ) : (
-                      <TouchableOpacity
-                        style={styles.buyTextContainer}
-                        onPress={() => {
-                          onEquipAvatar(item.id);
-                        }}
-                      >
-                        {loadingUpdateProfile ||
-                        loadingAddToAvatarCollection ? (
-                          <ActivityIndicator />
-                        ) : (
-                          <Text weight="medium" style={styles.equipText}>
-                            EQUIP
-                          </Text>
-                        )}
-                      </TouchableOpacity>
-                    )
+                </View>
+                {profileData?.myProfile.avatarCollection?.find(
+                  (element) => item.id === element.id,
+                ) ? (
+                  profileData.myProfile.avatar?.id === item.id ? (
+                    <View style={styles.buyTextContainer}>
+                      {loadingUpdateProfile || loadingAddToAvatarCollection ? (
+                        <ActivityIndicator />
+                      ) : (
+                        <IconButton
+                          icon="check-circle-outline"
+                          color={COLORS.marigold}
+                          style={styles.icon}
+                        />
+                      )}
+                    </View>
                   ) : (
                     <TouchableOpacity
                       style={styles.buyTextContainer}
                       onPress={() => {
-                        onBuyAvatar(item.id, item.price);
+                        onEquipAvatar(item.id);
                       }}
                     >
                       {loadingUpdateProfile || loadingAddToAvatarCollection ? (
                         <ActivityIndicator />
                       ) : (
-                        <Text weight="medium" style={styles.buyText}>
-                          BUY
+                        <Text weight="medium" style={styles.equipText}>
+                          PAKAI
                         </Text>
                       )}
                     </TouchableOpacity>
-                  )}
-                </View>
-              );
-            }}
-            keyExtractor={(item) => item.id}
-          />
-        </View>
+                  )
+                ) : (
+                  <TouchableOpacity
+                    style={styles.buyTextContainer}
+                    onPress={() => {
+                      onBuyAvatar(item.id, item.price);
+                    }}
+                  >
+                    {loadingUpdateProfile || loadingAddToAvatarCollection ? (
+                      <ActivityIndicator />
+                    ) : (
+                      <Text weight="medium" style={styles.buyText}>
+                        BELI
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                )}
+              </View>
+            );
+          }}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </View>
   );
@@ -209,10 +202,16 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   icon: {
-    margin: 0,
+    flex: 1,
+    alignItems: 'flex-end',
   },
-  avatarName: {
-    fontSize: FONT_SIZE.large,
+  points: {
+    flex: 1,
+    marginRight: 24,
+    paddingBottom: 5,
+    textAlign: 'right',
+    color: COLORS.marigold,
+    fontSize: FONT_SIZE.medium,
   },
   row: {
     flexDirection: 'row',
@@ -249,6 +248,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 5,
+    marginBottom: 16,
   },
   subTitle: {
     paddingHorizontal: 24,
@@ -263,6 +263,9 @@ const styles = StyleSheet.create({
   avatar: {
     backgroundColor: COLORS.white,
   },
+  avatarName: {
+    fontSize: FONT_SIZE.medium,
+  },
   contentContainer: {
     backgroundColor: COLORS.white,
     borderRadius: 8,
@@ -272,6 +275,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 24,
     marginHorizontal: 24,
+    paddingHorizontal: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -298,7 +302,7 @@ const styles = StyleSheet.create({
   },
   buyTextContainer: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     marginRight: 16,
   },
   buyText: {

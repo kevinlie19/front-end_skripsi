@@ -9,4 +9,5 @@ export const COLORS = {
   lightGrey: '#FAFAFA',
   lightYellow: '#FFF4E3',
   marigold: '#FFC107',
+  green: '#00FF00',
 };

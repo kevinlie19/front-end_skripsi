@@ -16,24 +16,13 @@ export const MY_PROFILE = gql`
         image
         price
       }
-      badge {
-        id
-        name
-      }
       highestScore
       point
-      exams {
+      progress {
         id
-        choices {
-          id
-          question {
-            id
-            description
-            category
-          }
-          answer
-          correct
-        }
+        Paket1
+        Paket2
+        Paket3
       }
       createdAt
     }

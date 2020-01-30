@@ -4,7 +4,6 @@ export const UPDATE_PROFILE = gql`
   mutation UpdateProfile(
     $name: String
     $email: String
-    $password: String
     $avatarId: ID
     $highestScore: Int
     $point: Int
@@ -12,7 +11,6 @@ export const UPDATE_PROFILE = gql`
     updateProfile(
       name: $name
       email: $email
-      password: $password
       avatarId: $avatarId
       highestScore: $highestScore
       point: $point
@@ -29,10 +27,6 @@ export const UPDATE_PROFILE = gql`
         id
         image
         price
-      }
-      badge {
-        id
-        name
       }
       highestScore
       point

@@ -1,6 +1,6 @@
 export const AllAvatars = [
   {
-    name: 'avatarDefault',
+    name: 'Default Avatar',
     src: require('../../assets/avatars/avatarDefault.png'),
   },
   {
@@ -8,27 +8,27 @@ export const AllAvatars = [
     src: require('../../assets/avatars/Female.png'),
   },
   {
-    name: 'FemaleBang',
+    name: 'Female Bang',
     src: require('../../assets/avatars/FemaleBang.png'),
   },
   {
-    name: 'FemaleGraduation',
+    name: 'Female Graduation',
     src: require('../../assets/avatars/FemaleGraduation.png'),
   },
   {
-    name: 'FemalePigtail',
+    name: 'Female Pigtail',
     src: require('../../assets/avatars/FemalePigtail.png'),
   },
   {
-    name: 'FemalePinkGraduation',
+    name: 'Female PinkGraduation',
     src: require('../../assets/avatars/FemalePinkGraduation.png'),
   },
   {
-    name: 'FemaleRed',
+    name: 'Female Red',
     src: require('../../assets/avatars/FemaleRed.png'),
   },
   {
-    name: 'FemaleRedGraduation',
+    name: 'Female Red Graduation',
     src: require('../../assets/avatars/FemaleRedGraduation.png'),
   },
   {
@@ -36,27 +36,27 @@ export const AllAvatars = [
     src: require('../../assets/avatars/Male.png'),
   },
   {
-    name: 'MaleBlonde',
+    name: 'Male Blonde',
     src: require('../../assets/avatars/MaleBlonde.png'),
   },
   {
-    name: 'MaleBlondeGraduation',
+    name: 'Male Blonde Graduation',
     src: require('../../assets/avatars/MaleBlondeGraduation.png'),
   },
   {
-    name: 'MaleCoolStudent',
+    name: 'Male Cool Student',
     src: require('../../assets/avatars/MaleCoolStudent.png'),
   },
   {
-    name: 'MaleGraduation',
+    name: 'Male Graduation',
     src: require('../../assets/avatars/MaleGraduation.png'),
   },
   {
-    name: 'MaleSpiky',
+    name: 'Male Spiky',
     src: require('../../assets/avatars/MaleSpiky.png'),
   },
   {
-    name: 'MaleStudent',
+    name: 'Male Student',
     src: require('../../assets/avatars/MaleStudent.png'),
   },
 ];

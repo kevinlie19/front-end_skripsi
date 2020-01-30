@@ -48,7 +48,7 @@ export default function MyProfileScene() {
           Profil Saya
         </Text>
         <Text weight="medium" style={styles.point}>
-          {data.myProfile.point} pts
+          {data.myProfile.highestScore} pts
         </Text>
       </View>
       <View style={styles.profileInfoContainer}>

@@ -20,12 +20,6 @@ export interface UpdateProfile_updateProfile_avatarCollection {
   price: number;
 }
 
-export interface UpdateProfile_updateProfile_badge {
-  __typename: "Badge";
-  id: string;
-  name: string;
-}
-
 export interface UpdateProfile_updateProfile {
   __typename: "User";
   id: string;
@@ -33,7 +27,6 @@ export interface UpdateProfile_updateProfile {
   name: string;
   avatar: UpdateProfile_updateProfile_avatar | null;
   avatarCollection: UpdateProfile_updateProfile_avatarCollection[] | null;
-  badge: UpdateProfile_updateProfile_badge[] | null;
   highestScore: number;
   point: number;
   createdAt: any;
@@ -46,7 +39,6 @@ export interface UpdateProfile {
 export interface UpdateProfileVariables {
   name?: string | null;
   email?: string | null;
-  password?: string | null;
   avatarId?: string | null;
   highestScore?: number | null;
   point?: number | null;

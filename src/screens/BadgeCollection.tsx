@@ -1,25 +1,41 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Text, IconButton } from 'exoflex';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
+import { useQuery } from '@apollo/react-hooks';
 
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
+import { MyProfile } from '../generated/MyProfile';
+import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
+import { Badges } from '../constants/badges';
 
 export default function BadgeCollection() {
   let { navigate } = useNavigation();
 
-  // let { loading, data } = useQuery<Leaderboard>(LEADERBOARD, {
-  // fetchPolicy: 'cache-and-network',
-  // });
+  let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
+    fetchPolicy: 'cache-and-network',
+  });
 
-  // if (loading || !data) {
-  //   return (
-  //     <View style={styles.loadingContainer}>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // } else {
+  if (loading || !data) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  const kondisiSatu = data?.myProfile.highestScore === 100;
+  const kondisiDua = data?.myProfile.avatarCollection?.length === 14;
+  const kondisiTiga =
+    data?.myProfile.progress.Paket1 === 100 &&
+    data?.myProfile.progress.Paket2 === 100 &&
+    data?.myProfile.progress.Paket3 === 100;
+  const kondisiEmpat = data?.myProfile.highestScore >= 60;
+  const kondisiLima = data?.myProfile.progress.Paket1 >= 60;
+  const kondisiEnam = data?.myProfile.progress.Paket2 >= 60;
+  const kondisiTujuh = data?.myProfile.progress.Paket3 >= 60;
+
   return (
     <View style={styles.flex}>
       <View style={styles.navbar}>
@@ -35,38 +51,200 @@ export default function BadgeCollection() {
         </Text>
         <View style={styles.flex} />
       </View>
-      <View style={styles.body}>
-        {/* <FlatList
-          showsVerticalScrollIndicator={false}
-          data={data.leaderboard}
-          renderItem={({ item, index }) => {
-            return (
-              <View style={styles.row}>
-                <Text>{index}.</Text>
-                <View style={styles.flex}>
-                  <Avatar.Image
-                    style={styles.avatar}
-                    source={{ uri: item.avatar?.image ?? ''}}
-                  />
-                </View>
-                <Text weight="medium" style={styles.flex}>
-                  {item.name}
-                </Text>
-                <Text style={styles.score}>{item.highestScore}/100</Text>
-              </View>
-            );
-          }}
-          keyExtractor={(item) => item.id}
-        /> */}
-      </View>
+
+      <ScrollView>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiSatu ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[0].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiSatu ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[0].name}
+            </Text>
+            <Text
+              style={
+                kondisiSatu ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[0].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiDua ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[1].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiDua ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[1].name}
+            </Text>
+            <Text
+              style={kondisiDua ? styles.requirement : styles.lockedRequirement}
+              weight="medium"
+            >
+              {Badges[1].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiTiga ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[2].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiTiga ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[2].name}
+            </Text>
+            <Text
+              style={
+                kondisiTiga ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[2].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiEmpat ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[3].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiEmpat ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[3].name}
+            </Text>
+            <Text
+              style={
+                kondisiEmpat ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[3].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiLima ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[4].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiLima ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[4].name}
+            </Text>
+            <Text
+              style={
+                kondisiLima ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[4].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiEnam ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[5].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiEnam ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[5].name}
+            </Text>
+            <Text
+              style={
+                kondisiEnam ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[5].description}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.contentContainer}>
+          <Avatar.Image
+            style={kondisiTujuh ? styles.avatar : styles.lockedAvatar}
+            source={
+              kondisiSatu
+                ? Badges[6].src
+                : require('../../assets/badges/Lock.png')
+            }
+          />
+          <View style={styles.marginLeft}>
+            <Text
+              style={kondisiTujuh ? styles.badgeName : styles.lockedBadgeName}
+              weight="medium"
+            >
+              {Badges[6].name}
+            </Text>
+            <Text
+              style={
+                kondisiTujuh ? styles.requirement : styles.lockedRequirement
+              }
+              weight="medium"
+            >
+              {Badges[6].description}
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
-  // }
 }
 
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  marginLeft: {
+    marginLeft: 16,
+    maxWidth: 250,
   },
   row: {
     flexDirection: 'row',
@@ -104,18 +282,38 @@ const styles = StyleSheet.create({
   body: {
     flex: 5,
   },
-  separator: {
-    marginVertical: 16,
+  avatar: {
+    marginLeft: 24,
+    marginRight: 16,
+    backgroundColor: COLORS.white,
+  },
+  lockedAvatar: {
+    opacity: 0.5,
+    marginLeft: 24,
+    marginRight: 16,
+    backgroundColor: COLORS.white,
+  },
+  contentContainer: {
+    height: 96,
+    backgroundColor: COLORS.white,
+    flexDirection: 'row',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grey,
   },
-  avatar: {
-    marginLeft: 29,
+  badgeName: {
+    fontSize: FONT_SIZE.medium,
+    color: COLORS.primaryColor,
   },
-  score: {
-    flex: 1,
+  lockedBadgeName: {
+    opacity: 0.5,
+    fontSize: FONT_SIZE.medium,
+  },
+  requirement: {
+    marginTop: 8,
+  },
+  lockedRequirement: {
+    marginTop: 8,
     opacity: 0.6,
-    color: COLORS.mediumGrey,
-    textAlign: 'right',
   },
 });

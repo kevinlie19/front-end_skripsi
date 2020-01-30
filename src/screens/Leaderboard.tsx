@@ -4,7 +4,7 @@ import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 
-import { Avatars } from '../constants/avatars';
+import { AllAvatars } from '../constants/avatars';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import { Leaderboard } from '../generated/Leaderboard';
@@ -46,17 +46,21 @@ export default function LeaderboardScene() {
             renderItem={({ item, index }) => {
               return (
                 <View style={styles.row}>
-                  <Text>{index + 1}.</Text>
+                  <Text weight="medium" style={{ fontSize: FONT_SIZE.medium }}>
+                    {index + 1}.
+                  </Text>
                   <View style={styles.flex}>
                     <Avatar.Image
                       style={styles.avatar}
-                      source={Avatars[Number(item.avatar?.image ?? 0)].src}
+                      source={AllAvatars[Number(item.avatar?.image ?? 0)].src}
                     />
                   </View>
-                  <Text weight="medium" style={styles.flex}>
+                  <Text weight="medium" style={styles.name}>
                     {item.name}
                   </Text>
-                  <Text style={styles.score}>{item.highestScore}/100</Text>
+                  <Text weight="medium" style={styles.score}>
+                    {item.highestScore} / 100
+                  </Text>
                 </View>
               );
             }}
@@ -119,10 +123,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  name: {
+    flex: 1,
+    fontSize: FONT_SIZE.medium,
+  },
   score: {
     flex: 1,
-    opacity: 0.6,
-    color: COLORS.mediumGrey,
+    fontSize: FONT_SIZE.medium,
+    color: COLORS.primaryColor,
     textAlign: 'right',
   },
 });

@@ -1,80 +1,81 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Text, IconButton, ActivityIndicator } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
+import { useFocusEffect } from 'react-navigation-hooks';
 
 import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';
-import { GET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
-import { GetLocalState } from '../generated/local/GetLocalState';
+import { MyProfile } from '../generated/MyProfile';
+import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 
 export default function Home() {
   let { navigate } = useNavigation();
   let src = require('../../assets/images/home.png');
 
-  let { data: userData } = useQuery<GetLocalState>(GET_LOCAL_STATE);
+  let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
+    fetchPolicy: 'cache-and-network',
+  });
 
-  if (userData) {
-    let {
-      user: { name },
-    } = userData;
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
-    if (!name) {
-      return (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.flex}>
-          <View style={styles.navbar}>
-            <IconButton
-              icon="trending-up"
-              color={COLORS.primaryColor}
-              size={30}
-              onPress={() => navigate('Leaderboard')}
-            />
-            <IconButton
-              icon="account-circle"
-              color={COLORS.primaryColor}
-              size={30}
-              onPress={() => navigate('MyProfile')}
-            />
-          </View>
-          <View style={styles.body}>
-            <View style={styles.center}>
-              <Image source={src} style={styles.image} />
-            </View>
-            <Text weight="medium" style={styles.title}>
-              Selamat Datang
-            </Text>
-            <View style={styles.center}>
-              <Text>Selamat datang {name}, harap tekan tombol</Text>
-              <Text>dibawah untuk mulai mengerjakan ujian.</Text>
-              <Text>Semoga berhasil!</Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.playButton}
-                onPress={() => navigate('Home')} // TODO: Change to Quiz Route
-              >
-                <IconButton
-                  icon="play"
-                  color={COLORS.white}
-                  size={35}
-                  style={styles.playIcon}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      );
-    }
-  } else {
-    return <View />;
+  if (loading || !data) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
+
+  return (
+    <View style={styles.flex}>
+      <View style={styles.navbar}>
+        <IconButton
+          icon="trending-up"
+          color={COLORS.primaryColor}
+          size={30}
+          onPress={() => navigate('Leaderboard')}
+        />
+        <IconButton
+          icon="account-circle"
+          color={COLORS.primaryColor}
+          size={30}
+          onPress={() => navigate('MyProfile')}
+        />
+      </View>
+      <View style={styles.body}>
+        <View style={styles.center}>
+          <Image source={src} style={styles.image} />
+        </View>
+        <Text weight="medium" style={styles.title}>
+          Selamat Datang
+        </Text>
+        <View style={styles.center}>
+          <Text>Selamat datang {data.myProfile.name}, harap tekan tombol</Text>
+          <Text>dibawah untuk mulai mengerjakan ujian.</Text>
+          <Text>Semoga berhasil!</Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.playButton}
+            onPress={() => navigate('ChoosePaket')}
+          >
+            <IconButton
+              icon="play"
+              color={COLORS.white}
+              size={35}
+              style={styles.playIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

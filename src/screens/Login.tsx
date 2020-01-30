@@ -17,32 +17,11 @@ import { LOGIN_USER } from '../graphql/mutations/loginMutation';
 import { Login, LoginVariables } from '../generated/Login';
 import { validateEmail, validatePassword } from '../helpers/validation';
 import asyncStorage from '../helpers/asyncStorage';
-import { SET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
-import {
-  SetLocalState,
-  SetLocalStateVariables,
-} from '../generated/local/SetLocalState';
 
 export default function LoginScene() {
   let { navigate } = useNavigation();
   let [emailValue, setEmailValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
-
-  let [setLocalState] = useMutation<SetLocalState, SetLocalStateVariables>(
-    SET_LOCAL_STATE,
-    {
-      onCompleted: () => {
-        navigate('Home');
-        setEmailValue('');
-        setPasswordValue('');
-      },
-      onError: (error) => {
-        Alert.alert(error.message, 'Please try again', [{ text: 'OK' }], {
-          cancelable: false,
-        });
-      },
-    },
-  );
 
   const [login, { loading: loadingLogin }] = useMutation<Login, LoginVariables>(
     LOGIN_USER,
@@ -50,9 +29,9 @@ export default function LoginScene() {
       onCompleted({ login }) {
         if (login.token && login.user) {
           asyncStorage.saveToken(login.token);
-          setLocalState({
-            variables: { user: login.user },
-          });
+          navigate('Home');
+          setEmailValue('');
+          setPasswordValue('');
         } else {
           Alert.alert(
             'Unexpected Error',

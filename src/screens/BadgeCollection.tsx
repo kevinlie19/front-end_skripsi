@@ -10,7 +10,7 @@ export default function BadgeCollection() {
   let { navigate } = useNavigation();
 
   // let { loading, data } = useQuery<Leaderboard>(LEADERBOARD, {
-  //   fetchPolicy: 'network-only',
+  // fetchPolicy: 'cache-and-network',
   // });
 
   // if (loading || !data) {

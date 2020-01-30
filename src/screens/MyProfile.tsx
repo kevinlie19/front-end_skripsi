@@ -1,49 +1,30 @@
-import React from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Text, IconButton, Avatar, ActivityIndicator } from 'exoflex';
 import { useNavigation } from 'naviflex';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import dateFormat from 'dateformat';
+import { useFocusEffect } from 'react-navigation-hooks';
 
-import { Avatars } from '../constants/avatars';
+import { AllAvatars } from '../constants/avatars';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import asyncStorage from '../helpers/asyncStorage';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
-import {
-  SetLocalState,
-  SetLocalStateVariables,
-} from '../generated/local/SetLocalState';
-import { SET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
 
 export default function MyProfileScene() {
-  let { navigate, getParam } = useNavigation();
-  let avatarSrc = require('../../assets/avatars/avatarDefault.png');
+  let { navigate } = useNavigation();
 
   let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
   });
 
-  let [setLocalState] = useMutation<SetLocalState, SetLocalStateVariables>(
-    SET_LOCAL_STATE,
-    {
-      onCompleted: () => {
-        navigate('EditProfile');
-      },
-      onError: (error) => {
-        Alert.alert(error.message, 'Please try again', [{ text: 'OK' }], {
-          cancelable: false,
-        });
-      },
-    },
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
   );
-
-  let onPressEdit = async () => {
-    await setLocalState({
-      variables: { user: data?.myProfile ?? { id: '', name: '', email: '' } },
-    });
-  };
 
   if (loading || !data) {
     return (
@@ -51,98 +32,95 @@ export default function MyProfileScene() {
         <ActivityIndicator size="large" />
       </View>
     );
-  } else {
-    if (getParam('from') === 'EditProfile') {
-      refetch();
-    }
-    return (
-      <View style={styles.flex}>
-        <View style={styles.navbar}>
-          <View style={styles.backIconContainer}>
-            <IconButton
-              icon="arrow-left"
-              color={COLORS.primaryColor}
-              onPress={() => navigate('Home')}
-            />
-          </View>
-          <Text weight="medium" style={styles.title}>
-            Profil Saya
-          </Text>
-          <Text weight="medium" style={styles.point}>
-            {data.myProfile.point} pts
-          </Text>
-        </View>
-        <View style={styles.profileInfoContainer}>
-          <Avatar.Image
-            style={styles.avatar}
-            source={Avatars[Number(data.myProfile.avatar?.image ?? 0)].src}
-            onPress={() => navigate('AvatarCollection')}
-          />
-          <View>
-            <Text weight="medium" style={styles.fontMedium}>
-              {data.myProfile.name}
-            </Text>
-            <Text style={styles.dateRegister}>{data.myProfile.email}</Text>
-            <Text style={styles.dateRegister}>
-              Registered on {dateFormat(data.myProfile.createdAt, 'dd/mm/yyyy')}
-            </Text>
-          </View>
+  }
+
+  return (
+    <View style={styles.flex}>
+      <View style={styles.navbar}>
+        <View style={styles.backIconContainer}>
           <IconButton
-            icon="pencil"
+            icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={onPressEdit}
+            onPress={() => navigate('Home')}
           />
         </View>
-        <View style={styles.body}>
-          <View style={styles.menuContainer}>
-            <IconButton
-              icon="star-circle"
-              color={COLORS.primaryColor}
-              style={styles.menuIcon}
-            />
-            <Text
-              weight="medium"
-              style={styles.fontMedium}
-              onPress={() => navigate('BadgeCollection')}
-            >
-              Koleksi Lencana
-            </Text>
-          </View>
-          <View style={styles.menuContainer}>
-            <IconButton
-              icon="information-outline"
-              color={COLORS.primaryColor}
-              style={styles.menuIcon}
-            />
-            <Text
-              weight="medium"
-              style={styles.fontMedium}
-              onPress={() => navigate('About')}
-            >
-              Tentang Aplikasi
-            </Text>
-          </View>
-          <View style={styles.menuContainer}>
-            <IconButton
-              icon="power"
-              color={COLORS.primaryColor}
-              style={styles.menuIcon}
-            />
-            <Text
-              weight="medium"
-              style={styles.fontMedium}
-              onPress={async () => {
-                await asyncStorage.removeToken();
-                navigate('Welcome');
-              }}
-            >
-              Keluar
-            </Text>
-          </View>
+        <Text weight="medium" style={styles.title}>
+          Profil Saya
+        </Text>
+        <Text weight="medium" style={styles.point}>
+          {data.myProfile.point} pts
+        </Text>
+      </View>
+      <View style={styles.profileInfoContainer}>
+        <Avatar.Image
+          style={styles.avatar}
+          source={AllAvatars[Number(data.myProfile.avatar?.image ?? 0)].src}
+          onPress={() => navigate('AvatarCollection')}
+        />
+        <View>
+          <Text weight="medium" style={styles.fontMedium}>
+            {data.myProfile.name}
+          </Text>
+          <Text style={styles.dateRegister}>{data.myProfile.email}</Text>
+          <Text style={styles.dateRegister}>
+            Registered on {dateFormat(data.myProfile.createdAt, 'dd/mm/yyyy')}
+          </Text>
+        </View>
+        <IconButton
+          icon="pencil"
+          color={COLORS.primaryColor}
+          onPress={() => navigate('EditProfile')}
+        />
+      </View>
+      <View style={styles.body}>
+        <View style={styles.menuContainer}>
+          <IconButton
+            icon="star-circle"
+            color={COLORS.primaryColor}
+            style={styles.menuIcon}
+          />
+          <Text
+            weight="medium"
+            style={styles.fontMedium}
+            onPress={() => navigate('BadgeCollection')}
+          >
+            Koleksi Lencana
+          </Text>
+        </View>
+        <View style={styles.menuContainer}>
+          <IconButton
+            icon="information-outline"
+            color={COLORS.primaryColor}
+            style={styles.menuIcon}
+          />
+          <Text
+            weight="medium"
+            style={styles.fontMedium}
+            onPress={() => navigate('About')}
+          >
+            Tentang Aplikasi
+          </Text>
+        </View>
+        <View style={styles.menuContainer}>
+          <IconButton
+            icon="power"
+            color={COLORS.primaryColor}
+            style={styles.menuIcon}
+          />
+          <Text
+            weight="medium"
+            style={styles.fontMedium}
+            onPress={async () => {
+              await asyncStorage.removeToken();
+              navigate('Welcome');
+            }}
+          >
+            Keluar
+          </Text>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

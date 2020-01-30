@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import {
   Text,
@@ -10,7 +10,9 @@ import {
 } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useFocusEffect } from 'react-navigation-hooks';
 
+import { AllAvatars } from '../constants/avatars';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import {
@@ -20,143 +22,119 @@ import {
 import { UPDATE_PROFILE } from '../graphql/mutations/updateProfileMutation';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
-import { GetLocalState } from '../generated/local/GetLocalState';
-import { GET_LOCAL_STATE } from '../localGraphQL/userDataQuery';
-import { Avatars } from '../constants/avatars';
 
 export default function EditProfile() {
-  let { navigate, getParam } = useNavigation();
+  let { navigate } = useNavigation();
+  let [nameValue, setNameValue] = useState('');
+  let [emailValue, setEmailValue] = useState('');
 
-  let { data: userData } = useQuery<GetLocalState>(GET_LOCAL_STATE);
+  let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
+    fetchPolicy: 'cache-and-network',
+    onCompleted: ({ myProfile }) => {
+      setNameValue(myProfile.name);
+      setEmailValue(myProfile.email);
+    },
+  });
 
-  if (userData) {
-    let {
-      user: { name, email },
-    } = userData;
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
 
-    if (!name) {
-      return (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" />
-        </View>
-      );
-    } else {
-      let [nameValue, setNameValue] = useState(name);
-      let [emailValue, setEmailValue] = useState(email);
+  const [updateProfile, { loading: loadingUpdate }] = useMutation<
+    UpdateProfile,
+    UpdateProfileVariables
+  >(UPDATE_PROFILE, {
+    onCompleted() {
+      navigate('MyProfile');
+      setNameValue('');
+      setEmailValue('');
+    },
+    onError(error) {
+      let newError = error.message.split(':');
+      Alert.alert(newError[1]);
+    },
+  });
 
-      let { loading, data: userAvatarData, refetch } = useQuery<MyProfile>(
-        MY_PROFILE,
-        {
-          fetchPolicy: 'network-only',
-        },
-      );
+  let onPressSimpan = async () => {
+    await updateProfile({
+      variables: {
+        name: nameValue,
+        email: emailValue,
+      },
+    });
+  };
 
-      const [updateProfile, { loading: loadingUpdate }] = useMutation<
-        UpdateProfile,
-        UpdateProfileVariables
-      >(UPDATE_PROFILE, {
-        onCompleted() {
-          navigate('MyProfile', { from: 'EditProfile' });
-          setNameValue('');
-          setEmailValue('');
-        },
-        onError(error) {
-          let newError = error.message.split(':');
-          Alert.alert(newError[1]);
-        },
-      });
-
-      let onPressSimpan = async () => {
-        await updateProfile({
-          variables: {
-            name: nameValue,
-            email: emailValue,
-          },
-        });
-      };
-
-      if (loadingUpdate || loading) {
-        return (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" />
-          </View>
-        );
-      }
-
-      if (getParam('from') === 'AvatarCollection') {
-        refetch();
-      }
-
-      return (
-        <View style={styles.flex}>
-          <View style={styles.navbar}>
-            <View style={styles.backIconContainer}>
-              <IconButton
-                icon="arrow-left"
-                color={COLORS.primaryColor}
-                onPress={() =>
-                  navigate('MyProfile', {
-                    from: 'EditProfile',
-                  })
-                }
-              />
-            </View>
-            <Text weight="medium" style={styles.title}>
-              Edit Profil
-            </Text>
-            <View style={styles.flex} />
-          </View>
-          <View style={styles.body}>
-            <View style={styles.avatarContainer}>
-              <Avatar.Image
-                style={styles.avatar}
-                size={96}
-                source={
-                  Avatars[Number(userAvatarData?.myProfile.avatar?.image ?? 0)]
-                    .src
-                }
-              />
-              <Text
-                weight="medium"
-                style={styles.gantiAvatar}
-                onPress={() => navigate('AvatarCollection')}
-              >
-                Ganti Avatar
-              </Text>
-            </View>
-            <TextInput
-              mode="flat"
-              style={styles.flex}
-              containerStyle={styles.textInput}
-              label="Nama"
-              value={nameValue}
-              onChangeText={setNameValue}
-              autoFocus={true}
-              autoCapitalize="words"
-            />
-            <TextInput
-              mode="flat"
-              style={styles.flex}
-              containerStyle={styles.textInput}
-              label="Alamat Email"
-              value={emailValue}
-              onChangeText={setEmailValue}
-              textContentType="emailAddress"
-              autoCapitalize="none"
-              keyboardType="email-address"
-            />
-          </View>
-          <View style={styles.bottomContainer}>
-            <Button style={styles.buttonStyle} onPress={onPressSimpan}>
-              <Text weight="medium" style={styles.buttonText}>
-                Simpan
-              </Text>
-            </Button>
-          </View>
-        </View>
-      );
-    }
+  if (loadingUpdate || loading || !data) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
+
+  return (
+    <View style={styles.flex}>
+      <View style={styles.navbar}>
+        <View style={styles.backIconContainer}>
+          <IconButton
+            icon="arrow-left"
+            color={COLORS.primaryColor}
+            onPress={() => navigate('MyProfile')}
+          />
+        </View>
+        <Text weight="medium" style={styles.title}>
+          Edit Profil
+        </Text>
+        <View style={styles.flex} />
+      </View>
+      <View style={styles.body}>
+        <View style={styles.avatarContainer}>
+          <Avatar.Image
+            style={styles.avatar}
+            size={96}
+            source={AllAvatars[Number(data?.myProfile.avatar?.image ?? 0)].src}
+          />
+          <Text
+            weight="medium"
+            style={styles.gantiAvatar}
+            onPress={() => navigate('AvatarCollection')}
+          >
+            Ganti Avatar
+          </Text>
+        </View>
+        <TextInput
+          mode="flat"
+          style={styles.flex}
+          containerStyle={styles.textInput}
+          label="Nama"
+          value={nameValue}
+          onChangeText={setNameValue}
+          autoFocus={true}
+          autoCapitalize="words"
+        />
+        <TextInput
+          mode="flat"
+          style={styles.flex}
+          containerStyle={styles.textInput}
+          label="Alamat Email"
+          value={emailValue}
+          onChangeText={setEmailValue}
+          textContentType="emailAddress"
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
+      </View>
+      <View style={styles.bottomContainer}>
+        <Button style={styles.buttonStyle} onPress={onPressSimpan}>
+          <Text weight="medium" style={styles.buttonText}>
+            Simpan
+          </Text>
+        </Button>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

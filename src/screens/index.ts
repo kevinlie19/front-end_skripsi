@@ -9,6 +9,7 @@ import EditProfile from './EditProfile';
 import AvatarCollection from './AvatarCollection';
 import BadgeCollection from './BadgeCollection';
 import About from './About';
+import ChoosePaket from './ChoosePaket';
 
 export {
   Splash,
@@ -22,4 +23,5 @@ export {
   AvatarCollection,
   BadgeCollection,
   About,
+  ChoosePaket,
 };

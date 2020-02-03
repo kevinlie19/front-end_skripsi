@@ -2,18 +2,20 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, IconButton } from 'exoflex';
 import { useNavigation } from 'naviflex';
-import { Button } from 'exoflex';
 
 import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';
 
-export default function ChoosePaket() {
-  let { navigate } = useNavigation();
+export default function Exam() {
+  let { navigate, getParam } = useNavigation();
 
-  let onPressPaket = (paketValue: string) => {
-    console.log(paketValue);
-    navigate('Exam', { paket: paketValue });
+  let index = 0;
+
+  let onPressBack = () => {
+    navigate('Home');
   };
+
+  let onPressIndex = () => {};
 
   return (
     <View style={styles.flex}>
@@ -22,39 +24,19 @@ export default function ChoosePaket() {
           <IconButton
             icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={() => navigate('Home')}
+            onPress={onPressBack}
           />
         </View>
         <Text weight="medium" style={styles.title}>
-          Pilih Paket
+          {getParam('paket')}
         </Text>
-        <View style={styles.flex} />
-      </View>
-      <View style={styles.body}>
-        <Button
-          style={styles.button}
-          onPress={() => {
-            onPressPaket('Paket 1');
-          }}
-        >
-          Paket 1
-        </Button>
-        <Button
-          style={styles.button}
-          onPress={() => {
-            onPressPaket('Paket 2');
-          }}
-        >
-          Paket 2
-        </Button>
-        <Button
-          style={styles.button}
-          onPress={() => {
-            onPressPaket('Paket 3');
-          }}
-        >
-          Paket 3
-        </Button>
+        <View style={(styles.flex, { justifyContent: 'flex-end' })}>
+          <View style={styles.nomorContainer}>
+            <Text weight="medium" style={styles.nomor} onPress={onPressIndex}>
+              {index + 1} / 40
+            </Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -67,6 +49,7 @@ const styles = StyleSheet.create({
   navbar: {
     marginTop: 35,
     paddingLeft: 8,
+    paddingRight: 16,
     marginBottom: 24,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -78,16 +61,22 @@ const styles = StyleSheet.create({
   },
   title: {
     flex: 1,
+    paddingLeft: 12,
     paddingBottom: 5,
     fontSize: FONT_SIZE.large,
-    textAlign: 'center',
+    textAlign: 'left',
   },
-  body: {
-    flex: 5,
-    paddingHorizontal: 24,
-    justifyContent: 'space-around',
-  },
-  button: {
+  nomorContainer: {
+    marginBottom: 5,
+    width: 56,
+    height: 24,
     borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.gold,
+  },
+  nomor: {
+    color: COLORS.white,
+    textAlign: 'right',
   },
 });

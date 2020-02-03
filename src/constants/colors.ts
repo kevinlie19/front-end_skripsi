@@ -8,6 +8,6 @@ export const COLORS = {
   grey: '#E8E8E8',
   lightGrey: '#FAFAFA',
   lightYellow: '#FFF4E3',
-  marigold: '#FFC107',
+  gold: '#FFCD4F',
   green: '#00FF00',
 };

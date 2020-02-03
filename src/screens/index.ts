@@ -10,6 +10,8 @@ import AvatarCollection from './AvatarCollection';
 import BadgeCollection from './BadgeCollection';
 import About from './About';
 import ChoosePaket from './ChoosePaket';
+import Exam from './Exam';
+import Result from './Result';
 
 export {
   Splash,
@@ -24,4 +26,6 @@ export {
   BadgeCollection,
   About,
   ChoosePaket,
+  Exam,
+  Result,
 };

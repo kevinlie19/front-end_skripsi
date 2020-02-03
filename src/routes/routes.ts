@@ -11,6 +11,8 @@ import {
   BadgeCollection,
   About,
   ChoosePaket,
+  Exam,
+  Result,
 } from '../screens';
 
 const initialRoute = 'Splash';
@@ -28,6 +30,8 @@ const routes = {
   BadgeCollection,
   About,
   ChoosePaket,
+  Exam,
+  Result,
 };
 
 export { initialRoute, routes };

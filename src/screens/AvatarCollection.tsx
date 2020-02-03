@@ -147,7 +147,7 @@ export default function AvatarCollection() {
                       ) : (
                         <IconButton
                           icon="check-circle-outline"
-                          color={COLORS.marigold}
+                          color={COLORS.gold}
                           style={styles.icon}
                         />
                       )}
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     marginRight: 24,
     paddingBottom: 5,
     textAlign: 'right',
-    color: COLORS.marigold,
+    color: COLORS.gold,
     fontSize: FONT_SIZE.medium,
   },
   row: {
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
   },
   equipText: {
     fontSize: FONT_SIZE.medium,
-    color: COLORS.marigold,
+    color: COLORS.gold,
   },
   coins: {
     alignItems: 'center',
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
   yellowCoin: {
     width: 10,
     height: 10,
-    backgroundColor: COLORS.marigold,
+    backgroundColor: COLORS.gold,
     borderRadius: 5,
     marginRight: 8,
   },

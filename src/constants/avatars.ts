@@ -20,7 +20,7 @@ export const AllAvatars = [
     src: require('../../assets/avatars/FemalePigtail.png'),
   },
   {
-    name: 'Female PinkGraduation',
+    name: 'Female Pink Graduation',
     src: require('../../assets/avatars/FemalePinkGraduation.png'),
   },
   {

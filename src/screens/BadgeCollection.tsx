@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
+import { Text, IconButton, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -9,6 +9,7 @@ import { FONT_SIZE } from '../constants/fonts';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import { Badges } from '../constants/badges';
+import { Loading } from '../core-ui';
 
 export default function BadgeCollection() {
   let { navigate } = useNavigation();
@@ -18,11 +19,7 @@ export default function BadgeCollection() {
   });
 
   if (loading || !data) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   }
 
   const kondisiSatu = data?.myProfile.highestScore === 100;
@@ -255,11 +252,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grey,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navbar: {
     marginTop: 35,

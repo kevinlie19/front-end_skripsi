@@ -1,13 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
-import {
-  Text,
-  IconButton,
-  TextInput,
-  Button,
-  ActivityIndicator,
-  Avatar,
-} from 'exoflex';
+import { Text, IconButton, TextInput, Button, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useFocusEffect } from 'react-navigation-hooks';
@@ -22,6 +15,7 @@ import {
 import { UPDATE_PROFILE } from '../graphql/mutations/updateProfileMutation';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
+import { Loading } from '../core-ui';
 
 export default function EditProfile() {
   let { navigate } = useNavigation();
@@ -67,11 +61,7 @@ export default function EditProfile() {
   };
 
   if (loadingUpdate || loading || !data) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -140,11 +130,6 @@ export default function EditProfile() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navbar: {
     marginTop: 25,

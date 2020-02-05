@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Text, IconButton, ActivityIndicator } from 'exoflex';
+import { Text, IconButton } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 import { useFocusEffect } from 'react-navigation-hooks';
@@ -9,6 +9,7 @@ import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
+import { Loading } from '../core-ui';
 
 export default function Home() {
   let { navigate } = useNavigation();
@@ -25,11 +26,7 @@ export default function Home() {
   );
 
   if (loading || !data) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -81,11 +78,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   center: {
     alignItems: 'center',

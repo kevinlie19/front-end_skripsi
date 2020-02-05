@@ -10,6 +10,7 @@ import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
+import { Loading } from '../core-ui';
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import { AllAvatars } from '../constants/avatars';
@@ -30,8 +31,6 @@ import { ADD_TO_AVATAR_COLLECTION } from '../graphql/mutations/addToAvatarMutati
 
 export default function AvatarCollection() {
   let { navigate } = useNavigation();
-
-  // let [isActive, setIsActive] = useState(false);
 
   let { loading: avatarLoading, data: avatarData } = useQuery<Avatars>(
     AVATARS,
@@ -92,11 +91,7 @@ export default function AvatarCollection() {
   };
 
   if (avatarLoading || profileLoading || !avatarData || !profileData) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -222,11 +217,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grey,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navbar: {
     marginTop: 35,

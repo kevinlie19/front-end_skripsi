@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, IconButton, Avatar, ActivityIndicator } from 'exoflex';
+import { Text, IconButton, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 import dateFormat from 'dateformat';
@@ -12,6 +12,7 @@ import { FONT_SIZE } from '../constants/fonts';
 import asyncStorage from '../helpers/asyncStorage';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
+import { Loading } from '../core-ui';
 
 export default function MyProfileScene() {
   let { navigate } = useNavigation();
@@ -27,11 +28,7 @@ export default function MyProfileScene() {
   );
 
   if (loading || !data) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   }
 
   return (
@@ -126,11 +123,6 @@ export default function MyProfileScene() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navbar: {
     marginTop: 25,

@@ -6,6 +6,18 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum Category {
+  Paket1 = "Paket1",
+  Paket2 = "Paket2",
+  Paket3 = "Paket3",
+}
+
+export enum QuestionEnum {
+  Paket1 = "Paket1",
+  Paket2 = "Paket2",
+  Paket3 = "Paket3",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

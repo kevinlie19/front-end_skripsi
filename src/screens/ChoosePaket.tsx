@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
 import { Text, IconButton } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { Button } from 'exoflex';
@@ -11,8 +11,24 @@ export default function ChoosePaket() {
   let { navigate } = useNavigation();
 
   let onPressPaket = (paketValue: string) => {
-    console.log(paketValue);
-    navigate('Exam', { paket: paketValue });
+    let temp = paketValue.split(' ');
+    let category = temp[0] + temp[1];
+
+    Alert.alert(
+      `Memulai Ujian Nasional ${paketValue}`,
+      'Waktu Pengerjaan Ujian Nasional adalah 120 Menit',
+      [
+        {
+          text: 'Nanti Dulu',
+        },
+        {
+          text: 'Mulai',
+          onPress: () =>
+            navigate('Exam', { paket: paketValue, category: category }),
+        },
+      ],
+      { cancelable: false },
+    );
   };
 
   return (
@@ -31,6 +47,12 @@ export default function ChoosePaket() {
         <View style={styles.flex} />
       </View>
       <View style={styles.body}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={require('../../assets/images/choose.png')}
+          />
+        </View>
         <Button
           style={styles.button}
           onPress={() => {
@@ -63,6 +85,14 @@ export default function ChoosePaket() {
 const styles = StyleSheet.create({
   flex: {
     flex: 1,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 500,
+    height: 300,
   },
   navbar: {
     marginTop: 35,

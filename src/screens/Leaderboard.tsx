@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Text, IconButton, ActivityIndicator, Avatar } from 'exoflex';
+import { Text, IconButton, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -9,6 +9,7 @@ import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
 import { Leaderboard } from '../generated/Leaderboard';
 import { LEADERBOARD } from '../graphql/queries/leaderboardQuery';
+import { Loading } from '../core-ui';
 
 export default function LeaderboardScene() {
   let { navigate } = useNavigation();
@@ -18,11 +19,7 @@ export default function LeaderboardScene() {
   });
 
   if (loading || !data) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Loading />;
   } else {
     return (
       <View style={styles.flex}>
@@ -85,11 +82,6 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grey,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   navbar: {
     marginTop: 35,

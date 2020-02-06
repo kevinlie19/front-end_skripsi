@@ -7403,6 +7403,13 @@ react-native-modal@^11.0.2:
   resolved "https://registry.yarnpkg.com/@ptomasroos/react-native-multi-slider/-/react-native-multi-slider-1.0.0.tgz#a4ea27b1320b93a1db9f696c24789695df6c9f30"
   integrity sha512-NpX22rQLArg9widwMzGf7XsInTDf6mfY/D1XaDVjglNkVphj3NSN37+nF6MofArCxC++1P+jHv0SGWbmJQwy4g==
 
+react-native-onboarding-swiper@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-onboarding-swiper/-/react-native-onboarding-swiper-1.1.0.tgz#fb4c5a10fc91e3d2fe7fa2e9860b3e4e997e672a"
+  integrity sha512-hU3DkRlo5pR4A8mAdvwWULZrnZx6rfNiQsdwP7cLHZNGRIYBBX09CxVgI9NYDf0iiEWDGfZQzqNeUk1uSbpSEg==
+  dependencies:
+    tinycolor2 "^1.4.1"
+
 react-native-paper@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-3.4.0.tgz#b8d3643b33177ff41a2505aaa801d313defaf707"
@@ -8542,6 +8549,11 @@ tiny-queue@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/tiny-queue/-/tiny-queue-0.2.1.tgz#25a67f2c6e253b2ca941977b5ef7442ef97a6046"
   integrity sha1-JaZ/LG4lOyypQZd7XvdELvl6YEY=
+
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
 title-case@^2.1.0:
   version "2.1.1"

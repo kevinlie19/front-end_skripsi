@@ -40,6 +40,7 @@
     "react-native": "^0.61.5",
     "react-native-gesture-handler": "^1.5.2",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
+    "react-native-onboarding-swiper": "^1.1.0",
     "react-native-svg": "^9.13.3",
     "react-navigation": "^4.0.10",
     "react-navigation-hooks": "^1.1.0",

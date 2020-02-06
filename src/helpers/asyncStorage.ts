@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-const TOKEN_NAME = 'thesis-token';
+const TOKEN_NAME = 'skripsi-token';
 
 export default {
   saveToken: (userToken: string) => {

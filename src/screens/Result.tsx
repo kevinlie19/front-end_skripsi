@@ -54,7 +54,9 @@ export default function Result() {
 
   let onPressHome = async () => {
     await updateProfile({
-      variables: { highestScore: score },
+      variables: {
+        highestScore: score,
+      },
     });
     await updateProgress({
       variables: {
@@ -87,8 +89,6 @@ export default function Result() {
       optionCorrectReview: optionCorrect,
     });
   };
-
-  console.log('result: ', answers);
 
   if (loadingProfile || loadingUpdateProfile || loadingUpdateProgress) {
     <Loading />;
@@ -126,11 +126,13 @@ export default function Result() {
       <View style={styles.bottomContainer}>
         <View style={styles.row}>
           <Text>Jawaban Benar</Text>
-          <Text weight="medium">{correctCounts} / 40</Text>
+          <Text weight="medium">
+            {correctCounts < 10 ? '0' + correctCounts : correctCounts} / 40
+          </Text>
         </View>
         <View style={[styles.row, styles.paddingVertical]}>
           <Text>Nilai Anda</Text>
-          <Text weight="medium">{score}</Text>
+          <Text weight="medium">{score < 10 ? '0' + score : score}</Text>
         </View>
         <View style={styles.row}>
           <Text>Total Koin</Text>

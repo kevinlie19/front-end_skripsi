@@ -2,6 +2,7 @@ import Splash from './Splash';
 import Welcome from './Welcome';
 import Login from './Login';
 import Register from './Register';
+import OnBoarding from './OnBoarding';
 import Home from './Home';
 import Leaderboard from './Leaderboard';
 import MyProfile from './MyProfile';
@@ -18,6 +19,7 @@ export {
   Welcome,
   Login,
   Register,
+  OnBoarding,
   Home,
   Leaderboard,
   MyProfile,

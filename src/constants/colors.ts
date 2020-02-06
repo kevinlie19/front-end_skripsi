@@ -9,6 +9,6 @@ export const COLORS = {
   lightGrey: '#FAFAFA',
   lightYellow: '#FFF4E3',
   gold: '#FFCD4F',
-  green: '#00FF00',
+  green: '#8AC67E',
   blue: '#00A3E3',
 };

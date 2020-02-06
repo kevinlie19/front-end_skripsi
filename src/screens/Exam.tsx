@@ -47,11 +47,253 @@ export default function Exam() {
   let [isActiveB, setIsActiveB] = useState(false);
   let [isActiveC, setIsActiveC] = useState(false);
   let [isActiveD, setIsActiveD] = useState(false);
+  let [isCorrectA, setIsCorrectA] = useState('');
+  let [isCorrectB, setIsCorrectB] = useState('');
+  let [isCorrectC, setIsCorrectC] = useState('');
+  let [isCorrectD, setIsCorrectD] = useState('');
   let [optionActive, setOptionActive] = useState('');
-  let [optionCorrect, setOptionCorrect] = useState(false);
-  let [answers, setAnswers] = useState<Answers>([]);
-
-  console.log('jawaban:', answers);
+  let [answers, setAnswers] = useState<Answers>([
+    // {
+    //   nomorSoal: 1,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 2,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 3,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 4,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 5,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 6,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 7,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 8,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 9,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 10,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 11,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 12,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 13,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 14,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 15,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 16,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 17,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 18,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 19,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 20,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 21,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 22,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 23,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 24,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 25,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 26,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 27,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 28,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 29,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 30,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 31,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 32,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 33,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 34,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 35,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 36,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 37,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 38,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 39,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+    // {
+    //   nomorSoal: 40,
+    //   optionActive: '',
+    //   answer: '',
+    //   correct: false,
+    // },
+  ]);
 
   useEffect(() => {
     if (typeof nomorReview === 'number' || nomorReview >= 0) {
@@ -72,26 +314,71 @@ export default function Exam() {
         setIsActiveB(false);
         setIsActiveC(false);
         setIsActiveD(false);
+
+        if (optionCorrectReview) {
+          setIsCorrectA('true');
+          setIsCorrectB('');
+          setIsCorrectC('');
+          setIsCorrectD('');
+        } else {
+          setIsCorrectA('false');
+          setIsCorrectB('');
+          setIsCorrectC('');
+          setIsCorrectD('');
+        }
       } else if (optionActiveReview === 'B') {
         setIsActiveA(false);
         setIsActiveB(true);
         setIsActiveC(false);
         setIsActiveD(false);
+
+        if (optionCorrectReview) {
+          setIsCorrectA('');
+          setIsCorrectB('true');
+          setIsCorrectC('');
+          setIsCorrectD('');
+        } else {
+          setIsCorrectA('');
+          setIsCorrectB('false');
+          setIsCorrectC('');
+          setIsCorrectD('');
+        }
       } else if (optionActiveReview === 'C') {
         setIsActiveA(false);
         setIsActiveB(false);
         setIsActiveC(true);
         setIsActiveD(false);
+
+        if (optionCorrectReview) {
+          setIsCorrectA('');
+          setIsCorrectB('');
+          setIsCorrectC('true');
+          setIsCorrectD('');
+        } else {
+          setIsCorrectA('');
+          setIsCorrectB('');
+          setIsCorrectC('false');
+          setIsCorrectD('');
+        }
       } else if (optionActiveReview === 'D') {
         setIsActiveA(false);
         setIsActiveB(false);
         setIsActiveC(false);
         setIsActiveD(true);
+
+        if (optionCorrectReview) {
+          setIsCorrectA('');
+          setIsCorrectB('');
+          setIsCorrectC('');
+          setIsCorrectD('true');
+        } else {
+          setIsCorrectA('');
+          setIsCorrectB('');
+          setIsCorrectC('');
+          setIsCorrectD('false');
+        }
       }
     }
-
-    // if (optionCorrectReview) {
-    // }
   });
 
   let onPressIndex = () => {
@@ -239,19 +526,67 @@ export default function Exam() {
 
   let optionAContainerStyle = [
     isActiveA && styles.activeAnswer,
+    isCorrectA === 'true'
+      ? styles.correctAnswer
+      : isCorrectA === 'false'
+      ? styles.falseAnswer
+      : null,
     styles.borderBottom,
   ];
   let optionBContainerStyle = [
     isActiveB && styles.activeAnswer,
+    isCorrectB === 'true'
+      ? styles.correctAnswer
+      : isCorrectB === 'false'
+      ? styles.falseAnswer
+      : null,
     styles.borderBottom,
   ];
   let optionCContainerStyle = [
     isActiveC && styles.activeAnswer,
+    isCorrectC === 'true'
+      ? styles.correctAnswer
+      : isCorrectC === 'false'
+      ? styles.falseAnswer
+      : null,
     styles.borderBottom,
   ];
   let optionDContainerStyle = [
     isActiveD && styles.activeAnswer,
+    isCorrectD === 'true'
+      ? styles.correctAnswer
+      : isCorrectD === 'false'
+      ? styles.falseAnswer
+      : null,
     styles.borderBottom,
+  ];
+
+  let optionsTextA = [
+    isCorrectA === 'true' && styles.activeOptions,
+    isCorrectA === 'false' && styles.activeOptions,
+    isActiveA && styles.activeOptions,
+    styles.options,
+  ];
+
+  let optionsTextB = [
+    isCorrectB === 'true' && styles.activeOptions,
+    isCorrectB === 'false' && styles.activeOptions,
+    isActiveB && styles.activeOptions,
+    styles.options,
+  ];
+
+  let optionsTextC = [
+    isCorrectC === 'true' && styles.activeOptions,
+    isCorrectC === 'false' && styles.activeOptions,
+    isActiveC && styles.activeOptions,
+    styles.options,
+  ];
+
+  let optionsTextD = [
+    isCorrectD === 'true' && styles.activeOptions,
+    isCorrectD === 'false' && styles.activeOptions,
+    isActiveD && styles.activeOptions,
+    styles.options,
   ];
 
   return (
@@ -323,40 +658,40 @@ export default function Exam() {
         <View style={styles.optionsContainer}>
           <View style={optionAContainerStyle}>
             <TouchableOpacity style={styles.row} onPress={onPressA}>
-              <Text weight="medium" style={styles.options}>
+              <Text weight="medium" style={optionsTextA}>
                 A.
               </Text>
-              <Text style={styles.options}>
+              <Text style={optionsTextA}>
                 {dataQuestions?.questions[nomor].choices[0].answer}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={optionBContainerStyle}>
             <TouchableOpacity style={styles.row} onPress={onPressB}>
-              <Text weight="medium" style={styles.options}>
+              <Text weight="medium" style={optionsTextB}>
                 B.
               </Text>
-              <Text style={styles.options}>
+              <Text style={optionsTextB}>
                 {dataQuestions?.questions[nomor].choices[1].answer}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={optionCContainerStyle}>
             <TouchableOpacity style={styles.row} onPress={onPressC}>
-              <Text weight="medium" style={styles.options}>
+              <Text weight="medium" style={optionsTextC}>
                 C.
               </Text>
-              <Text style={styles.options}>
+              <Text style={optionsTextC}>
                 {dataQuestions?.questions[nomor].choices[2].answer}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={optionDContainerStyle}>
             <TouchableOpacity style={styles.row} onPress={onPressD}>
-              <Text weight="medium" style={styles.options}>
+              <Text weight="medium" style={optionsTextD}>
                 D.
               </Text>
-              <Text style={styles.options}>
+              <Text style={optionsTextD}>
                 {dataQuestions?.questions[nomor].choices[3].answer}
               </Text>
             </TouchableOpacity>
@@ -386,7 +721,9 @@ export default function Exam() {
               navigate('Result', { answers: answers, category: category });
             }}
           >
-            <Text style={styles.buttonText}>Kembali ke Halaman Review</Text>
+            <Text weight="medium" style={styles.buttonText}>
+              Kembali ke Halaman Review
+            </Text>
           </Button>
         </View>
       )}
@@ -403,6 +740,12 @@ const styles = StyleSheet.create({
   },
   activeAnswer: {
     backgroundColor: COLORS.blue,
+  },
+  correctAnswer: {
+    backgroundColor: COLORS.green,
+  },
+  falseAnswer: {
+    backgroundColor: COLORS.primaryColor,
   },
   activeNomor: {
     paddingHorizontal: 16,
@@ -490,6 +833,11 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.large,
   },
   optionsContainer: {},
+  activeOptions: {
+    paddingLeft: 24,
+    maxWidth: 350,
+    color: COLORS.white,
+  },
   options: {
     paddingLeft: 24,
     maxWidth: 350,
@@ -499,9 +847,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
   },
   buttonStyle: {
-    backgroundColor: COLORS.green,
+    backgroundColor: COLORS.primaryColor,
   },
   buttonText: {
+    color: COLORS.white,
     fontSize: FONT_SIZE.medium,
   },
 });

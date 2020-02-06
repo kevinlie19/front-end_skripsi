@@ -29,7 +29,7 @@ export default function LoginScene() {
       onCompleted({ login }) {
         if (login.token && login.user) {
           asyncStorage.saveToken(login.token);
-          navigate('Home');
+          navigate('OnBoarding');
           setEmailValue('');
           setPasswordValue('');
         } else {

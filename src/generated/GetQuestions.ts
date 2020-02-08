@@ -19,7 +19,7 @@ export interface GetQuestions_questions {
   __typename: "Question";
   id: string;
   description: string;
-  choices: GetQuestions_questions_choices[];
+  choices: GetQuestions_questions_choices[] | null;
   category: QuestionEnum;
 }
 

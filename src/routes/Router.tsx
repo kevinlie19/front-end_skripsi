@@ -17,6 +17,7 @@ import {
   ChoosePaket,
   Exam,
   Result,
+  Review,
 } from '../screens';
 
 const AuthStack = createStackNavigator({
@@ -108,6 +109,15 @@ const AppStack = createStackNavigator(
         headerShown: false,
       },
     },
+<<<<<<< HEAD
+=======
+    Review: {
+      screen: Review,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+>>>>>>> UPDATE MANTAP MANTAP
   },
   {
     initialRouteName: 'Home',

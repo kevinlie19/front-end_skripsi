@@ -20,17 +20,22 @@ import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import { Loading } from '../core-ui';
 
-type Answers = Array<{
-  nomorSoal: number;
-  optionActive: string;
-  answer: string | undefined | null;
-  correct: boolean | undefined | null;
-}>;
+type Choice = {
+  id: string;
+  answer: string;
+  correct: boolean;
+};
 
 export default function Result() {
   let { getParam, navigate } = useNavigation();
-  let answers: Answers = getParam('answers');
   let category = getParam('category');
+  let answers: Array<Choice> = getParam('answers');
+
+  for (let i = 0; i < 40; i += 1) {
+    if (answers[i] === undefined) {
+      answers[i] = { id: '', answer: '', correct: false };
+    }
+  }
 
   let correctCounts = answers.filter((item) => item.correct).length;
   let score = correctCounts * 2.5;
@@ -55,39 +60,26 @@ export default function Result() {
   let onPressHome = async () => {
     await updateProfile({
       variables: {
-        highestScore: score,
+        highestScore: score * 10,
       },
     });
     await updateProgress({
       variables: {
         Paket1:
           category === 'Paket1'
-            ? score
+            ? score * 10
             : dataProfile?.myProfile.progress.Paket1,
         Paket2:
           category === 'Paket2'
-            ? score
+            ? score * 10
             : dataProfile?.myProfile.progress.Paket2,
         Paket3:
           category === 'Paket3'
-            ? score
+            ? score * 10
             : dataProfile?.myProfile.progress.Paket3,
       },
     });
     navigate('Home');
-  };
-
-  let onPressSoal = (
-    index: number,
-    optionActive: string,
-    optionCorrect: boolean | null | undefined,
-  ) => {
-    navigate('Exam', {
-      from: 'Result',
-      nomorReview: index,
-      optionActiveReview: optionActive,
-      optionCorrectReview: optionCorrect,
-    });
   };
 
   if (loadingProfile || loadingUpdateProfile || loadingUpdateProgress) {
@@ -109,8 +101,13 @@ export default function Result() {
               <TouchableOpacity
                 style={styles.row}
                 onPress={() => {
-                  onPressSoal(index, item.optionActive, item.correct);
+                  navigate('Review', {
+                    answer: answers[index],
+                    category,
+                    index,
+                  });
                 }}
+                key={index}
               >
                 <Text style={styles.pertanyaan}>Pertanyaan {index + 1}</Text>
                 <IconButton
@@ -120,7 +117,7 @@ export default function Result() {
               </TouchableOpacity>
             );
           }}
-          keyExtractor={(item) => item.nomorSoal.toString()}
+          keyExtractor={() => Math.random().toString()}
         />
       </View>
       <View style={styles.bottomContainer}>
@@ -132,13 +129,17 @@ export default function Result() {
         </View>
         <View style={[styles.row, styles.paddingVertical]}>
           <Text>Nilai Anda</Text>
-          <Text weight="medium">{score < 10 ? '0' + score : score}</Text>
+          <Text weight="medium">{score < 10 ? score : score}</Text>
         </View>
         <View style={styles.row}>
           <Text>Total Koin</Text>
           <Text weight="medium">80 koin</Text>
         </View>
-        <Button style={styles.buttonStyle} onPress={onPressHome}>
+        <Button
+          style={styles.buttonStyle}
+          onPress={onPressHome}
+          loading={loadingUpdateProfile || loadingUpdateProgress}
+        >
           <Text weight="medium" style={styles.buttontext}>
             Kembali ke Beranda
           </Text>
@@ -170,10 +171,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: COLORS.grey,
-  },
-  backIconContainer: {
-    flex: 1,
-    alignItems: 'flex-start',
   },
   title: {
     flex: 1,

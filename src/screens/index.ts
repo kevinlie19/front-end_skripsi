@@ -13,6 +13,7 @@ import About from './About';
 import ChoosePaket from './ChoosePaket';
 import Exam from './Exam';
 import Result from './Result';
+import Review from './Review';
 
 export {
   Splash,
@@ -30,4 +31,5 @@ export {
   ChoosePaket,
   Exam,
   Result,
+  Review,
 };

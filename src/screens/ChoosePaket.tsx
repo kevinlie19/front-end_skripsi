@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Alert } from 'react-native';
-import { Text, IconButton } from 'exoflex';
+import { Text, IconButton, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
-import { Button } from 'exoflex';
 
 import { FONT_SIZE } from '../constants/fonts';
 import { COLORS } from '../constants/colors';

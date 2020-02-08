@@ -17,6 +17,7 @@ import {
   ChoosePaket,
   Exam,
   Result,
+  Review,
 } from '../screens';
 
 const AuthStack = createStackNavigator({
@@ -104,6 +105,12 @@ const AppStack = createStackNavigator(
     },
     Result: {
       screen: Result,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    Review: {
+      screen: Review,
       navigationOptions: {
         headerShown: false,
       },

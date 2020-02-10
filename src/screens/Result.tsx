@@ -28,6 +28,7 @@ type Choice = {
 
 export default function Result() {
   let { getParam, navigate } = useNavigation();
+  let paket = getParam('paket');
   let category = getParam('category');
   let answers: Array<Choice> = getParam('answers');
 
@@ -39,6 +40,7 @@ export default function Result() {
 
   let correctCounts = answers.filter((item) => item.correct).length;
   let score = correctCounts * 2.5;
+  let koin = score * 2;
 
   let { loading: loadingProfile, data: dataProfile } = useQuery<MyProfile>(
     MY_PROFILE,
@@ -58,27 +60,40 @@ export default function Result() {
   >(UPDATE_USER_PROGRESS);
 
   let onPressHome = async () => {
-    await updateProfile({
-      variables: {
-        highestScore: score * 10,
-      },
-    });
-    await updateProgress({
-      variables: {
-        Paket1:
-          category === 'Paket1'
-            ? score * 10
-            : dataProfile?.myProfile.progress.Paket1,
-        Paket2:
-          category === 'Paket2'
-            ? score * 10
-            : dataProfile?.myProfile.progress.Paket2,
-        Paket3:
-          category === 'Paket3'
-            ? score * 10
-            : dataProfile?.myProfile.progress.Paket3,
-      },
-    });
+    if (dataProfile) {
+      await updateProfile({
+        variables: {
+          highestScore:
+            dataProfile.myProfile.highestScore / 10 < score
+              ? score * 10
+              : dataProfile.myProfile.highestScore,
+          point: dataProfile.myProfile.point + koin,
+        },
+      });
+
+      await updateProgress({
+        variables: {
+          Paket1:
+            category === 'Paket1'
+              ? dataProfile?.myProfile.progress.Paket1 > score
+                ? score * 10
+                : dataProfile?.myProfile.progress.Paket1
+              : dataProfile?.myProfile.progress.Paket1,
+          Paket2:
+            category === 'Paket2'
+              ? dataProfile?.myProfile.progress.Paket2 > score
+                ? score * 10
+                : dataProfile?.myProfile.progress.Paket2
+              : dataProfile?.myProfile.progress.Paket2,
+          Paket3:
+            category === 'Paket3'
+              ? dataProfile?.myProfile.progress.Paket3 > score
+                ? score * 10
+                : dataProfile?.myProfile.progress.Paket3
+              : dataProfile?.myProfile.progress.Paket3,
+        },
+      });
+    }
     navigate('Home');
   };
 
@@ -95,16 +110,21 @@ export default function Result() {
       </View>
       <View style={styles.body}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={answers}
           renderItem={({ item, index }) => {
             return (
               <TouchableOpacity
-                style={styles.row}
+                style={[
+                  styles.row,
+                  { paddingHorizontal: 0, paddingLeft: 25, paddingRight: 16 },
+                ]}
                 onPress={() => {
                   navigate('Review', {
                     answer: answers[index],
                     category,
                     index,
+                    paket,
                   });
                 }}
                 key={index}
@@ -123,17 +143,15 @@ export default function Result() {
       <View style={styles.bottomContainer}>
         <View style={styles.row}>
           <Text>Jawaban Benar</Text>
-          <Text weight="medium">
-            {correctCounts < 10 ? '0' + correctCounts : correctCounts} / 40
-          </Text>
+          <Text weight="medium">{correctCounts} / 40</Text>
         </View>
         <View style={[styles.row, styles.paddingVertical]}>
           <Text>Nilai Anda</Text>
-          <Text weight="medium">{score < 10 ? score : score}</Text>
+          <Text weight="medium">{score}</Text>
         </View>
         <View style={styles.row}>
           <Text>Total Koin</Text>
-          <Text weight="medium">80 koin</Text>
+          <Text weight="medium">{koin}</Text>
         </View>
         <Button
           style={styles.buttonStyle}

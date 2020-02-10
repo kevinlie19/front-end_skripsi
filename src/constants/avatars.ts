@@ -4,59 +4,51 @@ export const AllAvatars = [
     src: require('../../assets/avatars/avatarDefault.png'),
   },
   {
-    name: 'Female',
+    name: 'Siswi Berkuncir',
     src: require('../../assets/avatars/Female.png'),
   },
   {
-    name: 'Female Bang',
+    name: 'Siswi Berponi',
     src: require('../../assets/avatars/FemaleBang.png'),
   },
   {
-    name: 'Female Graduation',
+    name: 'Siswi Imut Lulus',
     src: require('../../assets/avatars/FemaleGraduation.png'),
   },
   {
-    name: 'Female Pigtail',
+    name: 'Siswi Imut',
     src: require('../../assets/avatars/FemalePigtail.png'),
   },
   {
-    name: 'Female Pink Graduation',
-    src: require('../../assets/avatars/FemalePinkGraduation.png'),
-  },
-  {
-    name: 'Female Red',
+    name: 'Siswi Lugu',
     src: require('../../assets/avatars/FemaleRed.png'),
   },
   {
-    name: 'Female Red Graduation',
+    name: 'Siswi Lulus',
     src: require('../../assets/avatars/FemaleRedGraduation.png'),
   },
   {
-    name: 'Male',
+    name: 'Siswa Berkacamata',
     src: require('../../assets/avatars/Male.png'),
   },
   {
-    name: 'Male Blonde',
+    name: 'Siswa Rambut Pirang',
     src: require('../../assets/avatars/MaleBlonde.png'),
   },
   {
-    name: 'Male Blonde Graduation',
+    name: 'Siswa Lulus',
     src: require('../../assets/avatars/MaleBlondeGraduation.png'),
   },
   {
-    name: 'Male Cool Student',
-    src: require('../../assets/avatars/MaleCoolStudent.png'),
-  },
-  {
-    name: 'Male Graduation',
-    src: require('../../assets/avatars/MaleGraduation.png'),
-  },
-  {
-    name: 'Male Spiky',
+    name: 'Siswa Ganteng',
     src: require('../../assets/avatars/MaleSpiky.png'),
   },
   {
-    name: 'Male Student',
+    name: 'Siswa Imut',
     src: require('../../assets/avatars/MaleStudent.png'),
+  },
+  {
+    name: 'Avatar Emas',
+    src: require('../../assets/avatars/GoldGraduation.png'),
   },
 ];

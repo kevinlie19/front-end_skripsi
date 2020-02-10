@@ -2,7 +2,7 @@ export const Badges = [
   {
     name: 'Nilai Sempurna',
     description: 'Telah Menyelesaikan Suatu Paket Dengan Nilai 100',
-    src: require('../../assets/badges/Graduation.png'),
+    src: require('../../assets/badges/Graduated.png'),
   },
   {
     name: 'Sang Kolektor Avatar',
@@ -12,12 +12,12 @@ export const Badges = [
   {
     name: 'Siswa Sempurna',
     description: 'Telah Menyelesaikan Semua Paket Dengan Nilai 100',
-    src: require('../../assets/badges/GoldGraduation.png'),
+    src: require('../../assets/badges/University.png'),
   },
   {
     name: 'Siswa Yang Siap Lulus',
     description: 'Telah Menyelesaikan Suatu Paket Dengan Nilai Lebih Dari 60',
-    src: require('../../assets/badges/GoldGraduation.png'),
+    src: require('../../assets/badges/Graduation.png'),
   },
   {
     name: 'Lulus Paket 1',

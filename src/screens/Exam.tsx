@@ -5,8 +5,9 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
-import { Text, Portal, Modal } from 'exoflex';
+import { Text, Portal, Modal, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
 
@@ -26,10 +27,12 @@ export default function Exam() {
   let { navigate, getParam } = useNavigation();
 
   const category = getParam('category');
+  const paket = getParam('paket');
 
   let [questionIndex, setQuestionIndex] = useState(0);
   let [answers, setAnswers] = useState<Array<Choice>>([]);
   let [modalVisible, setModalVisible] = useState(false);
+  let [buttonVisible, setButtonVisible] = useState(false);
 
   const { loading: loadingQuestions, data: dataQuestions } = useQuery<
     GetQuestions,
@@ -38,7 +41,17 @@ export default function Exam() {
     variables: { category },
   });
 
+  const onPressNext = () => {
+    if (questionIndex < 39) {
+      setQuestionIndex(questionIndex + 1);
+    } else {
+      setQuestionIndex(questionIndex);
+    }
+  };
+
   const onPressAnswer = (choice: Choice) => {
+    setButtonVisible(true);
+
     let tempArray = [...answers];
     tempArray[questionIndex] = choice;
     setAnswers(tempArray);
@@ -49,6 +62,19 @@ export default function Exam() {
       setQuestionIndex(index);
     }
     setModalVisible(false);
+  };
+
+  const onPressKumpul = () => {
+    Alert.alert('Mengumpulkan...', 'Apakah Anda Yakin?', [
+      { text: 'Nanti Dulu' },
+      {
+        text: 'Kumpul',
+        onPress: () => {
+          setModalVisible(false);
+          navigate('Result', { answers, category, paket });
+        },
+      },
+    ]);
   };
 
   if (loadingQuestions) {
@@ -69,12 +95,7 @@ export default function Exam() {
             <Text weight="medium" style={styles.modalTitle}>
               Pertanyaan
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(false);
-                navigate('Result', { answers, category });
-              }}
-            >
+            <TouchableOpacity onPress={onPressKumpul}>
               <Text weight="bold" style={styles.kumpul}>
                 Kumpul
               </Text>
@@ -116,7 +137,7 @@ export default function Exam() {
           <CountdownTimer />
         </View>
         <Text weight="medium" style={styles.title}>
-          {getParam('paket')}
+          {paket}
         </Text>
         <View style={(styles.flex, { justifyContent: 'flex-end' })}>
           <TouchableOpacity
@@ -155,16 +176,40 @@ export default function Exam() {
                   }}
                   key={index}
                 >
-                  <Text weight="medium">
+                  <Text
+                    weight="medium"
+                    style={[
+                      answers[questionIndex] !== undefined &&
+                      answers[questionIndex].id === element.id
+                        ? styles.activeAnswerText
+                        : null,
+                    ]}
+                  >
                     {String.fromCharCode(index + 65)}.{' '}
                   </Text>
-                  <Text>{element.answer}</Text>
+                  <Text
+                    style={[
+                      answers[questionIndex] !== undefined &&
+                      answers[questionIndex].id === element.id
+                        ? styles.activeAnswerText
+                        : null,
+                    ]}
+                  >
+                    {element.answer}
+                  </Text>
                 </TouchableOpacity>
               );
             },
           )}
         </View>
       </ScrollView>
+      {buttonVisible && (
+        <Button style={styles.buttonStyle} onPress={onPressNext}>
+          <Text weight="medium" style={styles.buttonText}>
+            {questionIndex < 39 ? 'Soal Selanjutnya' : 'Selesai'}
+          </Text>
+        </Button>
+      )}
     </View>
   );
 }
@@ -173,8 +218,12 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  answer: {},
   activeAnswer: {
     backgroundColor: COLORS.blue,
+  },
+  activeAnswerText: {
+    color: COLORS.white,
   },
   borderBottom: {
     borderBottomWidth: 1,
@@ -267,4 +316,13 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.large,
   },
   optionsContainer: {},
+  buttonStyle: {
+    marginBottom: 36,
+    marginHorizontal: 24,
+    backgroundColor: COLORS.primaryColor,
+  },
+  buttonText: {
+    fontSize: FONT_SIZE.medium,
+    color: COLORS.white,
+  },
 });

@@ -22,16 +22,16 @@ export default function BadgeCollection() {
     return <Loading />;
   }
 
-  const kondisiSatu = data?.myProfile.highestScore === 100;
+  const kondisiSatu = data?.myProfile.highestScore / 10 === 100;
   const kondisiDua = data?.myProfile.avatarCollection?.length === 14;
   const kondisiTiga =
-    data?.myProfile.progress.Paket1 === 100 &&
-    data?.myProfile.progress.Paket2 === 100 &&
-    data?.myProfile.progress.Paket3 === 100;
-  const kondisiEmpat = data?.myProfile.highestScore >= 60;
-  const kondisiLima = data?.myProfile.progress.Paket1 >= 60;
-  const kondisiEnam = data?.myProfile.progress.Paket2 >= 60;
-  const kondisiTujuh = data?.myProfile.progress.Paket3 >= 60;
+    data?.myProfile.progress.Paket1 / 10 === 100 &&
+    data?.myProfile.progress.Paket2 / 10 === 100 &&
+    data?.myProfile.progress.Paket3 / 10 === 100;
+  const kondisiEmpat = data?.myProfile.highestScore / 10 >= 60;
+  const kondisiLima = data?.myProfile.progress.Paket1 / 10 >= 60;
+  const kondisiEnam = data?.myProfile.progress.Paket2 / 10 >= 60;
+  const kondisiTujuh = data?.myProfile.progress.Paket3 / 10 >= 60;
 
   return (
     <View style={styles.flex}>
@@ -80,7 +80,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiDua ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiDua
                 ? Badges[1].src
                 : require('../../assets/badges/Lock.png')
             }
@@ -104,7 +104,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiTiga ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiTiga
                 ? Badges[2].src
                 : require('../../assets/badges/Lock.png')
             }
@@ -130,7 +130,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiEmpat ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiEmpat
                 ? Badges[3].src
                 : require('../../assets/badges/Lock.png')
             }
@@ -156,7 +156,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiLima ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiLima
                 ? Badges[4].src
                 : require('../../assets/badges/Lock.png')
             }
@@ -182,7 +182,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiEnam ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiEnam
                 ? Badges[5].src
                 : require('../../assets/badges/Lock.png')
             }
@@ -208,7 +208,7 @@ export default function BadgeCollection() {
           <Avatar.Image
             style={kondisiTujuh ? styles.avatar : styles.lockedAvatar}
             source={
-              kondisiSatu
+              kondisiTujuh
                 ? Badges[6].src
                 : require('../../assets/badges/Lock.png')
             }

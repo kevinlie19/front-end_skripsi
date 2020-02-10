@@ -31,7 +31,7 @@ export default function OnBoarding() {
       />
     ),
     title: 'ANDA ADALAH SISWA BERBAKAT',
-    subtitle: 'Done with React Native Onboarding Swiper',
+    subtitle: 'Mari Lulus Ujian Nasional Bahasa Indonesia',
   };
 
   const page3 = {
@@ -43,7 +43,7 @@ export default function OnBoarding() {
       />
     ),
     title: 'AYO MULAI',
-    subtitle: 'Done with React Native Onboarding Swiper',
+    subtitle: 'Dapatkan Nilai Terbaikmu!',
   };
 
   return (

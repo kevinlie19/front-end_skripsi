@@ -56,7 +56,7 @@ export default function LeaderboardScene() {
                     {item.name}
                   </Text>
                   <Text weight="medium" style={styles.score}>
-                    {item.highestScore} / 100
+                    {item.highestScore / 10} / 100
                   </Text>
                 </View>
               );

@@ -19,6 +19,7 @@ type Choice = {
 export default function Exam() {
   let { goBack, getParam } = useNavigation();
 
+  const paket = getParam('paket');
   const answer: Choice = getParam('answer');
   const category = getParam('category');
   const questionIndex = getParam('index');
@@ -49,7 +50,7 @@ export default function Exam() {
           />
         </View>
         <Text weight="medium" style={styles.title}>
-          {getParam('paket')}
+          {paket}
         </Text>
         <View style={(styles.flex, { justifyContent: 'flex-end' })}>
           <View style={styles.nomorContainer}>
@@ -82,10 +83,29 @@ export default function Exam() {
                   onPress={() => {}}
                   key={index}
                 >
-                  <Text weight="medium">
+                  <Text
+                    weight="medium"
+                    style={[
+                      answer.id === element.id
+                        ? answer.correct
+                          ? styles.answerText
+                          : styles.answerText
+                        : null,
+                    ]}
+                  >
                     {String.fromCharCode(index + 65)}.{' '}
                   </Text>
-                  <Text>{element.answer}</Text>
+                  <Text
+                    style={[
+                      answer.id === element.id
+                        ? answer.correct
+                          ? styles.answerText
+                          : styles.answerText
+                        : null,
+                    ]}
+                  >
+                    {element.answer}
+                  </Text>
                 </TouchableOpacity>
               );
             },
@@ -139,8 +159,11 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  answerText: {
+    color: COLORS.white,
+  },
   correctAnswer: {
-    backgroundColor: COLORS.blue,
+    backgroundColor: COLORS.green,
   },
   wrongAnswer: {
     backgroundColor: COLORS.primaryColor,

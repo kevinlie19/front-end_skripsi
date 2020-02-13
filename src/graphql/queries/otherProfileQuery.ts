@@ -1,11 +1,10 @@
 import gql from 'graphql-tag';
 
-export const MY_PROFILE = gql`
-  query MyProfile {
-    myProfile {
+export const OTHER_PROFILE = gql`
+  query OtherProfile($id: ID!) {
+    otherProfile(id: $id) {
       id
       email
-      password
       name
       avatar {
         id

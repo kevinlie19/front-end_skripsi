@@ -6,7 +6,9 @@ import OnBoarding from './OnBoarding';
 import Home from './Home';
 import Leaderboard from './Leaderboard';
 import MyProfile from './MyProfile';
+import OtherProfile from './OtherProfile';
 import EditProfile from './EditProfile';
+import ChangePassword from './ChangePassword';
 import AvatarCollection from './AvatarCollection';
 import BadgeCollection from './BadgeCollection';
 import About from './About';
@@ -24,7 +26,9 @@ export {
   Home,
   Leaderboard,
   MyProfile,
+  OtherProfile,
   EditProfile,
+  ChangePassword,
   AvatarCollection,
   BadgeCollection,
   About,

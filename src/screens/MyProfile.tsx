@@ -15,7 +15,7 @@ import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 import { Loading } from '../core-ui';
 
 export default function MyProfileScene() {
-  let { navigate } = useNavigation();
+  let { navigate, goBack } = useNavigation();
 
   let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
     fetchPolicy: 'cache-and-network',
@@ -38,7 +38,7 @@ export default function MyProfileScene() {
           <IconButton
             icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={() => navigate('Home')}
+            onPress={() => goBack()}
           />
         </View>
         <Text weight="medium" style={styles.title}>

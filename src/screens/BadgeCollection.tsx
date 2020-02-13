@@ -12,26 +12,29 @@ import { Badges } from '../constants/badges';
 import { Loading } from '../core-ui';
 
 export default function BadgeCollection() {
-  let { navigate } = useNavigation();
+  let { goBack } = useNavigation();
 
-  let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
-    fetchPolicy: 'cache-and-network',
-  });
+  let { loading: loadingMyProfile, data: myProfileData } = useQuery<MyProfile>(
+    MY_PROFILE,
+    {
+      fetchPolicy: 'cache-and-network',
+    },
+  );
 
-  if (loading || !data) {
+  if (loadingMyProfile || !myProfileData) {
     return <Loading />;
   }
 
-  const kondisiSatu = data?.myProfile.highestScore / 10 === 100;
-  const kondisiDua = data?.myProfile.avatarCollection?.length === 14;
+  const kondisiSatu = myProfileData?.myProfile.highestScore / 10 === 100;
+  const kondisiDua = myProfileData?.myProfile.avatarCollection?.length === 14;
   const kondisiTiga =
-    data?.myProfile.progress.Paket1 / 10 === 100 &&
-    data?.myProfile.progress.Paket2 / 10 === 100 &&
-    data?.myProfile.progress.Paket3 / 10 === 100;
-  const kondisiEmpat = data?.myProfile.highestScore / 10 >= 60;
-  const kondisiLima = data?.myProfile.progress.Paket1 / 10 >= 60;
-  const kondisiEnam = data?.myProfile.progress.Paket2 / 10 >= 60;
-  const kondisiTujuh = data?.myProfile.progress.Paket3 / 10 >= 60;
+    myProfileData?.myProfile.progress.Paket1 / 10 === 100 &&
+    myProfileData?.myProfile.progress.Paket2 / 10 === 100 &&
+    myProfileData?.myProfile.progress.Paket3 / 10 === 100;
+  const kondisiEmpat = myProfileData?.myProfile.highestScore / 10 >= 60;
+  const kondisiLima = myProfileData?.myProfile.progress.Paket1 / 10 >= 60;
+  const kondisiEnam = myProfileData?.myProfile.progress.Paket2 / 10 >= 60;
+  const kondisiTujuh = myProfileData?.myProfile.progress.Paket3 / 10 >= 60;
 
   return (
     <View style={styles.flex}>
@@ -40,7 +43,7 @@ export default function BadgeCollection() {
           <IconButton
             icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={() => navigate('MyProfile')}
+            onPress={() => goBack()}
           />
         </View>
         <Text weight="medium" style={styles.title}>

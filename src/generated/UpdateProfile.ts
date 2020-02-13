@@ -24,6 +24,7 @@ export interface UpdateProfile_updateProfile {
   __typename: "User";
   id: string;
   email: string;
+  password: string;
   name: string;
   avatar: UpdateProfile_updateProfile_avatar | null;
   avatarCollection: UpdateProfile_updateProfile_avatarCollection[] | null;
@@ -39,6 +40,7 @@ export interface UpdateProfile {
 export interface UpdateProfileVariables {
   name?: string | null;
   email?: string | null;
+  password?: string | null;
   avatarId?: string | null;
   highestScore?: number | null;
   point?: number | null;

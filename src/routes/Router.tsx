@@ -10,6 +10,7 @@ import {
   Home,
   Leaderboard,
   MyProfile,
+  OtherProfile,
   EditProfile,
   About,
   AvatarCollection,
@@ -18,6 +19,7 @@ import {
   Exam,
   Result,
   Review,
+  ChangePassword,
 } from '../screens';
 
 const AuthStack = createStackNavigator({
@@ -67,8 +69,20 @@ const AppStack = createStackNavigator(
         headerShown: false,
       },
     },
+    OtherProfile: {
+      screen: OtherProfile,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
     EditProfile: {
       screen: EditProfile,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    ChangePassword: {
+      screen: ChangePassword,
       navigationOptions: {
         headerShown: false,
       },

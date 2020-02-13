@@ -1,9 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import { Text, IconButton, TextInput, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { useFocusEffect } from 'react-navigation-hooks';
+import { sha256 } from 'js-sha256';
 
 import { COLORS } from '../constants/colors';
 import { FONT_SIZE } from '../constants/fonts';
@@ -12,28 +12,24 @@ import {
   UpdateProfileVariables,
 } from '../generated/UpdateProfile';
 import { UPDATE_PROFILE } from '../graphql/mutations/updateProfileMutation';
+import { Loading } from '../core-ui';
+import { validatePassword } from '../helpers/validation';
 import { MyProfile } from '../generated/MyProfile';
 import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
-import { Loading } from '../core-ui';
 
-export default function EditProfile() {
-  let { navigate } = useNavigation();
-  let [nameValue, setNameValue] = useState('');
-  let [emailValue, setEmailValue] = useState('');
+export default function ChangePassword() {
+  let { navigate, goBack } = useNavigation();
+  let [userPassword, setUserPassword] = useState('');
+  let [oldPasswordValue, setOldPasswordValue] = useState('');
+  let [passwordValue, setPasswordValue] = useState('');
+  let [repeatPasswordValue, setRepeatPasswordValue] = useState('');
 
-  let { loading, data, refetch } = useQuery<MyProfile>(MY_PROFILE, {
+  let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
     fetchPolicy: 'cache-and-network',
-    onCompleted: ({ myProfile }) => {
-      setNameValue(myProfile.name);
-      setEmailValue(myProfile.email);
+    onCompleted: () => {
+      setUserPassword(data?.myProfile.password ?? '');
     },
   });
-
-  useFocusEffect(
-    useCallback(() => {
-      refetch();
-    }, [refetch]),
-  );
 
   const [updateProfile, { loading: loadingUpdate }] = useMutation<
     UpdateProfile,
@@ -41,8 +37,8 @@ export default function EditProfile() {
   >(UPDATE_PROFILE, {
     onCompleted() {
       navigate('MyProfile');
-      setNameValue('');
-      setEmailValue('');
+      setPasswordValue('');
+      setRepeatPasswordValue('');
     },
     onError(error) {
       let newError = error.message.split(':');
@@ -51,15 +47,46 @@ export default function EditProfile() {
   });
 
   let onPressSimpan = async () => {
-    await updateProfile({
-      variables: {
-        name: nameValue,
-        email: emailValue,
-      },
-    });
+    if (
+      validatePassword(passwordValue) &&
+      passwordValue === repeatPasswordValue &&
+      sha256(oldPasswordValue + `"EZAF"`) === userPassword
+    ) {
+      await updateProfile({
+        variables: {
+          password: passwordValue,
+        },
+      });
+    } else if (
+      !validatePassword(passwordValue) ||
+      passwordValue !== repeatPasswordValue
+    ) {
+      Alert.alert(
+        'Kata Sandi Tidak Valid',
+        'Mohon Mengisi Kata Sandi Kembali',
+        [{ text: 'OK' }],
+        { cancelable: false },
+      );
+    } else if (sha256(oldPasswordValue + `"EZAF"`) !== userPassword) {
+      Alert.alert(
+        'Kata Sandi Lama Tidak Valid',
+        'Mohon Mengisi Kata Sandi Lama Kembali',
+        [{ text: 'OK' }],
+        { cancelable: false },
+      );
+    } else {
+      Alert.alert(
+        'Terjadi Kesalahan Yang Tidak Diketahui',
+        'Mohon Mencoba Kembali',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        },
+      );
+    }
   };
 
-  if (loadingUpdate || loading || !data) {
+  if (loadingUpdate || loading) {
     return <Loading />;
   }
 
@@ -70,43 +97,44 @@ export default function EditProfile() {
           <IconButton
             icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={() => navigate('MyProfile')}
+            onPress={() => goBack()}
           />
         </View>
         <Text weight="medium" style={styles.title}>
-          Ubah Profil
+          Ubah Kata Sandi
         </Text>
-        <View style={styles.flex}>
-          <Text
-            weight="medium"
-            style={styles.changePassword}
-            onPress={() => navigate('ChangePassword')}
-          >
-            Ubah Kata Sandi
-          </Text>
-        </View>
+        <View style={styles.flex} />
       </View>
       <View style={styles.body}>
         <TextInput
           mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
-          label="Nama"
-          value={nameValue}
-          onChangeText={setNameValue}
-          autoFocus={true}
-          autoCapitalize="words"
+          label="Kata Sandi Lama"
+          value={oldPasswordValue}
+          onChangeText={setOldPasswordValue}
+          textContentType="password"
+          secureTextEntry={true}
         />
         <TextInput
           mode="flat"
           style={styles.flex}
           containerStyle={styles.textInput}
-          label="Alamat Email"
-          value={emailValue}
-          onChangeText={setEmailValue}
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          keyboardType="email-address"
+          label="Kata Sandi Baru"
+          value={passwordValue}
+          onChangeText={setPasswordValue}
+          textContentType="password"
+          secureTextEntry={true}
+        />
+        <TextInput
+          mode="flat"
+          style={styles.flex}
+          containerStyle={styles.textInput}
+          label="Ulangi Kata Sandi Baru"
+          value={repeatPasswordValue}
+          onChangeText={setRepeatPasswordValue}
+          textContentType="password"
+          secureTextEntry={true}
         />
       </View>
       <View style={styles.bottomContainer}>
@@ -171,10 +199,5 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.white,
     fontSize: FONT_SIZE.medium,
-  },
-  changePassword: {
-    color: COLORS.primaryColor,
-    textAlign: 'right',
-    paddingRight: 16,
   },
 });

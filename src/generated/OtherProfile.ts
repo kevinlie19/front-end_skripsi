@@ -3,24 +3,24 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: MyProfile
+// GraphQL query operation: OtherProfile
 // ====================================================
 
-export interface MyProfile_myProfile_avatar {
+export interface OtherProfile_otherProfile_avatar {
   __typename: "Avatar";
   id: string;
   image: string;
   price: number;
 }
 
-export interface MyProfile_myProfile_avatarCollection {
+export interface OtherProfile_otherProfile_avatarCollection {
   __typename: "Avatar";
   id: string;
   image: string;
   price: number;
 }
 
-export interface MyProfile_myProfile_progress {
+export interface OtherProfile_otherProfile_progress {
   __typename: "Progress";
   id: string;
   Paket1: number;
@@ -28,20 +28,23 @@ export interface MyProfile_myProfile_progress {
   Paket3: number;
 }
 
-export interface MyProfile_myProfile {
+export interface OtherProfile_otherProfile {
   __typename: "User";
   id: string;
   email: string;
-  password: string;
   name: string;
-  avatar: MyProfile_myProfile_avatar | null;
-  avatarCollection: MyProfile_myProfile_avatarCollection[] | null;
+  avatar: OtherProfile_otherProfile_avatar | null;
+  avatarCollection: OtherProfile_otherProfile_avatarCollection[] | null;
   highestScore: number;
   point: number;
-  progress: MyProfile_myProfile_progress;
+  progress: OtherProfile_otherProfile_progress;
   createdAt: any;
 }
 
-export interface MyProfile {
-  myProfile: MyProfile_myProfile;
+export interface OtherProfile {
+  otherProfile: OtherProfile_otherProfile;
+}
+
+export interface OtherProfileVariables {
+  id: string;
 }

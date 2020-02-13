@@ -35,9 +35,12 @@ export default function RegisterScene() {
       setPasswordValue('');
       setRePasswordValue('');
     },
-    onError(error) {
-      let newError = error.message.split(':');
-      Alert.alert(newError[1]);
+    onError() {
+      Alert.alert(
+        'Alamat Email atau Kata Sandi Salah',
+        'Mohon Mencoba Kembali',
+        [{ text: 'OK' }],
+      );
     },
   });
 
@@ -52,22 +55,30 @@ export default function RegisterScene() {
       });
     } else if (!validateEmail(emailValue)) {
       Alert.alert(
-        'Email is not valid',
-        'Please fill the email again',
+        'Alamat Email Tidak Valid',
+        'Mohon Mengisi Alamat Email Kembali',
         [{ text: 'OK' }],
         { cancelable: false },
       );
-    } else if (!validatePassword(passwordValue)) {
+    } else if (
+      !validatePassword(passwordValue) ||
+      passwordValue !== rePasswordValue
+    ) {
       Alert.alert(
-        'Password is not valid',
-        'Please fill the password again',
+        'Kata Sandi Tidak Valid',
+        'Mohon Mengisi Kata Sandi Kembali',
         [{ text: 'OK' }],
         { cancelable: false },
       );
     } else {
-      Alert.alert('Unexpected Error', 'Please try again', [{ text: 'OK' }], {
-        cancelable: false,
-      });
+      Alert.alert(
+        'Terjadi Kesalahan Yang Tidak Diketahui',
+        'Mohon Mencoba Kembali',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        },
+      );
     }
   };
 

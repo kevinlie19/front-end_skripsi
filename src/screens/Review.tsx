@@ -129,7 +129,7 @@ export default function Exam() {
                 Jawabanmu salah!
               </Text>
               <View style={styles.review}>
-                <Text>Pembetulannya adalah </Text>
+                <Text>Kunci jawabannya adalah </Text>
                 <Text weight="medium">{`"${correctAnswer &&
                   correctAnswer[0].answer}"`}</Text>
               </View>
@@ -143,7 +143,7 @@ export default function Exam() {
                 Kamu tidak menjawab soal ini!
               </Text>
               <View style={styles.review}>
-                <Text>Pembetulannya adalah </Text>
+                <Text>Kunci jawabannya adalah </Text>
                 <Text weight="medium">{`"${correctAnswer &&
                   correctAnswer[0].answer}"`}</Text>
               </View>

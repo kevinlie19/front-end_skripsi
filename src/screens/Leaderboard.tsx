@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Text, IconButton, Avatar } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useQuery } from '@apollo/react-hooks';
@@ -10,13 +10,34 @@ import { FONT_SIZE } from '../constants/fonts';
 import { Leaderboard } from '../generated/Leaderboard';
 import { LEADERBOARD } from '../graphql/queries/leaderboardQuery';
 import { Loading } from '../core-ui';
+import { useFocusEffect } from 'react-navigation-hooks';
+import { MyProfile } from '../generated/MyProfile';
+import { MY_PROFILE } from '../graphql/queries/myProfileQuery';
 
 export default function LeaderboardScene() {
   let { navigate } = useNavigation();
 
-  let { loading, data } = useQuery<Leaderboard>(LEADERBOARD, {
+  let { loading, data, refetch } = useQuery<Leaderboard>(LEADERBOARD, {
     fetchPolicy: 'cache-and-network',
   });
+
+  let { data: myProfileData } = useQuery<MyProfile>(MY_PROFILE, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch]),
+  );
+
+  let onPressUser = (id: string) => {
+    if (id === myProfileData?.myProfile.id) {
+      navigate('MyProfile');
+    } else {
+      navigate('OtherProfile', { id });
+    }
+  };
 
   if (loading || !data) {
     return <Loading />;
@@ -42,7 +63,10 @@ export default function LeaderboardScene() {
             data={data.leaderboard}
             renderItem={({ item, index }) => {
               return (
-                <View style={styles.row}>
+                <TouchableOpacity
+                  style={styles.row}
+                  onPress={() => onPressUser(item.id)}
+                >
                   <Text weight="medium" style={{ fontSize: FONT_SIZE.medium }}>
                     {index + 1}.
                   </Text>
@@ -58,7 +82,7 @@ export default function LeaderboardScene() {
                   <Text weight="medium" style={styles.score}>
                     {item.highestScore / 10} / 100
                   </Text>
-                </View>
+                </TouchableOpacity>
               );
             }}
             keyExtractor={(item) => item.id}

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   StyleSheet,
   Alert,
   ScrollView,
   KeyboardAvoidingView,
+  TextInput as TextInputType,
 } from 'react-native';
 import {
   Text,
@@ -29,6 +30,10 @@ export default function RegisterScene() {
   let [emailValue, setEmailValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
   let [rePasswordValue, setRePasswordValue] = useState('');
+
+  let emailRef = useRef<TextInputType>(null);
+  let passwordRef = useRef<TextInputType>(null);
+  let rePasswordRef = useRef<TextInputType>(null);
 
   const [register, { loading: loadingRegister }] = useMutation<
     Register,
@@ -134,6 +139,10 @@ export default function RegisterScene() {
               onChangeText={setNameValue}
               autoFocus={true}
               autoCapitalize="words"
+              onSubmitEditing={() => {
+                emailRef.current && emailRef.current.focus();
+              }}
+              returnKeyType="next"
             />
             <TextInput
               mode="flat"
@@ -145,6 +154,11 @@ export default function RegisterScene() {
               textContentType="emailAddress"
               autoCapitalize="none"
               keyboardType="email-address"
+              ref={emailRef}
+              onSubmitEditing={() => {
+                passwordRef.current && passwordRef.current.focus();
+              }}
+              returnKeyType="next"
             />
             <TextInput
               mode="flat"
@@ -155,6 +169,11 @@ export default function RegisterScene() {
               onChangeText={setPasswordValue}
               textContentType="password"
               secureTextEntry={true}
+              ref={passwordRef}
+              onSubmitEditing={() => {
+                rePasswordRef.current && rePasswordRef.current.focus();
+              }}
+              returnKeyType="next"
             />
             <TextInput
               mode="flat"
@@ -165,6 +184,8 @@ export default function RegisterScene() {
               onChangeText={setRePasswordValue}
               textContentType="password"
               secureTextEntry={true}
+              ref={rePasswordRef}
+              returnKeyType="done"
             />
           </ScrollView>
         </View>

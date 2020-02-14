@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, KeyboardAvoidingView } from 'react-native';
 import { Text, IconButton, TextInput, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -91,60 +91,62 @@ export default function ChangePassword() {
   }
 
   return (
-    <View style={styles.flex}>
-      <View style={styles.navbar}>
-        <View style={styles.backIconContainer}>
-          <IconButton
-            icon="arrow-left"
-            color={COLORS.primaryColor}
-            onPress={() => goBack()}
+    <KeyboardAvoidingView behavior="padding" enabled style={styles.flex}>
+      <View style={styles.flex}>
+        <View style={styles.navbar}>
+          <View style={styles.backIconContainer}>
+            <IconButton
+              icon="arrow-left"
+              color={COLORS.primaryColor}
+              onPress={() => goBack()}
+            />
+          </View>
+          <Text weight="medium" style={styles.title}>
+            Ubah Kata Sandi
+          </Text>
+          <View style={styles.flex} />
+        </View>
+        <View style={styles.body}>
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Kata Sandi Lama"
+            value={oldPasswordValue}
+            onChangeText={setOldPasswordValue}
+            textContentType="password"
+            secureTextEntry={true}
+          />
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Kata Sandi Baru"
+            value={passwordValue}
+            onChangeText={setPasswordValue}
+            textContentType="password"
+            secureTextEntry={true}
+          />
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Ulangi Kata Sandi Baru"
+            value={repeatPasswordValue}
+            onChangeText={setRepeatPasswordValue}
+            textContentType="password"
+            secureTextEntry={true}
           />
         </View>
-        <Text weight="medium" style={styles.title}>
-          Ubah Kata Sandi
-        </Text>
-        <View style={styles.flex} />
+        <View style={styles.bottomContainer}>
+          <Button style={styles.buttonStyle} onPress={onPressSimpan}>
+            <Text weight="medium" style={styles.buttonText}>
+              Simpan
+            </Text>
+          </Button>
+        </View>
       </View>
-      <View style={styles.body}>
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Kata Sandi Lama"
-          value={oldPasswordValue}
-          onChangeText={setOldPasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Kata Sandi Baru"
-          value={passwordValue}
-          onChangeText={setPasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Ulangi Kata Sandi Baru"
-          value={repeatPasswordValue}
-          onChangeText={setRepeatPasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
-      </View>
-      <View style={styles.bottomContainer}>
-        <Button style={styles.buttonStyle} onPress={onPressSimpan}>
-          <Text weight="medium" style={styles.buttonText}>
-            Simpan
-          </Text>
-        </Button>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

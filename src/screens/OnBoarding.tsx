@@ -14,12 +14,12 @@ export default function OnBoarding() {
     backgroundColor: COLORS.white,
     image: (
       <Image
-        source={require('../../assets/images/2020.png')}
+        source={require('../../assets/images/welcome.png')}
         style={styles.image1}
       />
     ),
-    title: 'SELAMAT DATANG',
-    subtitle: 'Done with React Native Onboarding Swiper',
+    title: 'SELAMAT DATANG DI SUKUN',
+    subtitle: 'Sukses Ujian Nasional Bahasa Indonesia',
   };
 
   const page2 = {
@@ -31,19 +31,19 @@ export default function OnBoarding() {
       />
     ),
     title: 'ANDA ADALAH SISWA BERBAKAT',
-    subtitle: 'Mari Lulus Ujian Nasional Bahasa Indonesia',
+    subtitle: 'Tunjukkan Kemampuan Bahasa Indonesiamu',
   };
 
   const page3 = {
     backgroundColor: COLORS.white,
     image: (
       <Image
-        source={require('../../assets/images/quiz.png')}
+        source={require('../../assets/images/graduation.png')}
         style={styles.image3}
       />
     ),
-    title: 'AYO MULAI',
-    subtitle: 'Dapatkan Nilai Terbaikmu!',
+    title: 'AYO LULUS UJIAN NASIONAL BAHASA INDONESIA',
+    subtitle: 'SUKUN 2020! Dapatkan Nilai Terbaikmu!',
   };
 
   return (
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image1: {
-    width: 450,
-    height: 300,
+    width: 350,
+    height: 350,
   },
   image2: {
     width: 300,

@@ -29,7 +29,7 @@ import {
 } from '../generated/AddToAvatarCollection';
 import { ADD_TO_AVATAR_COLLECTION } from '../graphql/mutations/addToAvatarMutation';
 
-export default function AvatarCollection() {
+export default function Shop() {
   let { navigate } = useNavigation();
 
   let { loading: avatarLoading, data: avatarData } = useQuery<Avatars>(
@@ -101,7 +101,7 @@ export default function AvatarCollection() {
           <IconButton
             icon="arrow-left"
             color={COLORS.primaryColor}
-            onPress={() => navigate('EditProfile')}
+            onPress={() => navigate('MyProfile')}
           />
         </View>
         <Text weight="medium" style={styles.title}>

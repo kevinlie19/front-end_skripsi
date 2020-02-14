@@ -44,15 +44,23 @@ export default function MyProfileScene() {
         <Text weight="medium" style={styles.title}>
           Profil Saya
         </Text>
-        <Text weight="medium" style={styles.point}>
-          {data.myProfile.highestScore / 10} pts
-        </Text>
+        <View style={styles.flex}>
+          <Text weight="medium" style={styles.point}>
+            Nilai : {data.myProfile.highestScore / 10}
+          </Text>
+          <View style={styles.userInfo}>
+            <View style={styles.yellowCoin} />
+            <Text weight="medium" style={styles.koin}>
+              {data.myProfile.point}
+            </Text>
+          </View>
+        </View>
       </View>
       <View style={styles.profileInfoContainer}>
         <Avatar.Image
           style={styles.avatar}
           source={AllAvatars[Number(data.myProfile.avatar?.image ?? 0)].src}
-          onPress={() => navigate('AvatarCollection')}
+          onPress={() => navigate('Shop')}
         />
         <View>
           <Text weight="medium" style={styles.fontMedium}>
@@ -60,7 +68,7 @@ export default function MyProfileScene() {
           </Text>
           <Text style={styles.dateRegister}>{data.myProfile.email}</Text>
           <Text style={styles.dateRegister}>
-            Registered on {dateFormat(data.myProfile.createdAt, 'dd/mm/yyyy')}
+            Terdaftar Sejak {dateFormat(data.myProfile.createdAt, 'dd/mm/yyyy')}
           </Text>
         </View>
         <IconButton
@@ -70,6 +78,20 @@ export default function MyProfileScene() {
         />
       </View>
       <View style={styles.body}>
+        <View style={styles.menuContainer}>
+          <IconButton
+            icon="shopping"
+            color={COLORS.primaryColor}
+            style={styles.menuIcon}
+          />
+          <Text
+            weight="medium"
+            style={styles.fontMedium}
+            onPress={() => navigate('Shop')}
+          >
+            Toko Avatar
+          </Text>
+        </View>
         <View style={styles.menuContainer}>
           <IconButton
             icon="star-circle"
@@ -124,6 +146,18 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  yellowCoin: {
+    width: 10,
+    height: 10,
+    backgroundColor: COLORS.gold,
+    borderRadius: 5,
+    marginRight: 8,
+  },
   navbar: {
     marginTop: 25,
     paddingLeft: 8,
@@ -146,8 +180,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   point: {
-    flex: 1,
     color: COLORS.primaryColor,
+    fontSize: FONT_SIZE.medium,
+    textAlign: 'right',
+  },
+  koin: {
+    paddingBottom: 2,
+    color: COLORS.gold,
     fontSize: FONT_SIZE.medium,
     textAlign: 'right',
   },

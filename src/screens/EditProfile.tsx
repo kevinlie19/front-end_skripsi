@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, KeyboardAvoidingView } from 'react-native';
 import { Text, IconButton, TextInput, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -64,59 +64,60 @@ export default function EditProfile() {
   }
 
   return (
-    <View style={styles.flex}>
-      <View style={styles.navbar}>
-        <View style={styles.backIconContainer}>
-          <IconButton
-            icon="arrow-left"
-            color={COLORS.primaryColor}
-            onPress={() => navigate('MyProfile')}
+    <KeyboardAvoidingView behavior="padding" enabled style={styles.flex}>
+      <View style={styles.flex}>
+        <View style={styles.navbar}>
+          <View style={styles.backIconContainer}>
+            <IconButton
+              icon="arrow-left"
+              color={COLORS.primaryColor}
+              onPress={() => navigate('MyProfile')}
+            />
+          </View>
+          <Text weight="medium" style={styles.title}>
+            Ubah Profil
+          </Text>
+          <View style={styles.flex}>
+            <Text
+              weight="medium"
+              style={styles.changePassword}
+              onPress={() => navigate('ChangePassword')}
+            >
+              Ubah Kata Sandi
+            </Text>
+          </View>
+        </View>
+        <View style={styles.body}>
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Nama"
+            value={nameValue}
+            onChangeText={setNameValue}
+            autoCapitalize="words"
+          />
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Alamat Email"
+            value={emailValue}
+            onChangeText={setEmailValue}
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            keyboardType="email-address"
           />
         </View>
-        <Text weight="medium" style={styles.title}>
-          Ubah Profil
-        </Text>
-        <View style={styles.flex}>
-          <Text
-            weight="medium"
-            style={styles.changePassword}
-            onPress={() => navigate('ChangePassword')}
-          >
-            Ubah Kata Sandi
-          </Text>
+        <View style={styles.bottomContainer}>
+          <Button style={styles.buttonStyle} onPress={onPressSimpan}>
+            <Text weight="medium" style={styles.buttonText}>
+              Simpan
+            </Text>
+          </Button>
         </View>
       </View>
-      <View style={styles.body}>
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Nama"
-          value={nameValue}
-          onChangeText={setNameValue}
-          autoFocus={true}
-          autoCapitalize="words"
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Alamat Email"
-          value={emailValue}
-          onChangeText={setEmailValue}
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-      </View>
-      <View style={styles.bottomContainer}>
-        <Button style={styles.buttonStyle} onPress={onPressSimpan}>
-          <Text weight="medium" style={styles.buttonText}>
-            Simpan
-          </Text>
-        </Button>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

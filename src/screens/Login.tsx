@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { View, StyleSheet, Alert, KeyboardAvoidingView } from 'react-native';
 import {
   Text,
   TextInput,
@@ -17,11 +17,19 @@ import { LOGIN_USER } from '../graphql/mutations/loginMutation';
 import { Login, LoginVariables } from '../generated/Login';
 import { validateEmail, validatePassword } from '../helpers/validation';
 import asyncStorage from '../helpers/asyncStorage';
+import { useFocusEffect } from 'react-navigation-hooks';
 
 export default function LoginScene() {
   let { navigate } = useNavigation();
   let [emailValue, setEmailValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
+
+  useFocusEffect(
+    useCallback(() => {
+      setEmailValue('');
+      setPasswordValue('');
+    }, []),
+  );
 
   const [login, { loading: loadingLogin }] = useMutation<Login, LoginVariables>(
     LOGIN_USER,
@@ -34,8 +42,8 @@ export default function LoginScene() {
           setPasswordValue('');
         } else {
           Alert.alert(
-            'Unexpected Error',
-            'Please try again',
+            'Terjadi Kesalahan Yang Tidak Diketahui',
+            'Mohon Mencoba Kembali',
             [{ text: 'OK' }],
             {
               cancelable: false,
@@ -43,9 +51,12 @@ export default function LoginScene() {
           );
         }
       },
-      onError(error) {
-        let newError = error.message.split(':');
-        Alert.alert(newError[1]);
+      onError() {
+        Alert.alert(
+          'Alamat Email atau Kata Sandi Salah',
+          'Mohon Mencoba Kembali',
+          [{ text: 'OK' }],
+        );
       },
     },
   );
@@ -60,81 +71,88 @@ export default function LoginScene() {
       });
     } else if (!validateEmail(emailValue)) {
       Alert.alert(
-        'Email is not valid',
-        'Please fill the email again',
+        'Alamat Email Tidak Valid',
+        'Mohon Mengisi Alamat Email Kembali',
         [{ text: 'OK' }],
         { cancelable: false },
       );
     } else if (!validatePassword(passwordValue)) {
       Alert.alert(
-        'Password is not valid',
-        'Please fill the password again',
+        'Kata Sandi Tidak Valid',
+        'Mohon Mengisi Kata Sandi Kembali',
         [{ text: 'OK' }],
         { cancelable: false },
       );
     } else {
-      Alert.alert('Unexpected Error', 'Please try again', [{ text: 'OK' }], {
-        cancelable: false,
-      });
+      Alert.alert(
+        'Terjadi Kesalahan Yang Tidak Diketahui',
+        'Mohon Mencoba Kembali',
+        [{ text: 'OK' }],
+        {
+          cancelable: false,
+        },
+      );
     }
   };
 
   return (
-    <View style={styles.flex}>
-      <Portal>
-        <Modal
-          contentContainerStyle={styles.modal}
-          animationType="fade"
-          visible={loadingLogin}
-        >
-          <ActivityIndicator size="large" color={COLORS.primaryColor} />
-        </Modal>
-      </Portal>
-      <View style={styles.body}>
-        <View style={styles.navbar}>
-          <View />
-          <Text weight="medium" style={styles.title}>
-            Masuk
-          </Text>
-          <Text
-            weight="bold"
-            style={styles.daftarText}
-            onPress={() => navigate('Register')}
+    <KeyboardAvoidingView behavior="padding" enabled style={styles.flex}>
+      <View style={styles.flex}>
+        <Portal>
+          <Modal
+            contentContainerStyle={styles.modal}
+            animationType="fade"
+            visible={loadingLogin}
           >
-            Daftar
-          </Text>
+            <ActivityIndicator size="large" color={COLORS.primaryColor} />
+          </Modal>
+        </Portal>
+        <View style={styles.body}>
+          <View style={styles.navbar}>
+            <View />
+            <Text weight="medium" style={styles.title}>
+              Masuk
+            </Text>
+            <Text
+              weight="bold"
+              style={styles.daftarText}
+              onPress={() => navigate('Register')}
+            >
+              Daftar
+            </Text>
+          </View>
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Alamat Email"
+            value={emailValue}
+            onChangeText={setEmailValue}
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            autoFocus={true}
+            keyboardType="email-address"
+          />
+          <TextInput
+            mode="flat"
+            style={styles.flex}
+            containerStyle={styles.textInput}
+            label="Kata Sandi"
+            value={passwordValue}
+            onChangeText={setPasswordValue}
+            textContentType="password"
+            secureTextEntry={true}
+          />
         </View>
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Alamat Email"
-          value={emailValue}
-          onChangeText={setEmailValue}
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          autoFocus={true}
-          keyboardType="email-address"
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Kata Sandi"
-          value={passwordValue}
-          onChangeText={setPasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
+        <View style={styles.bottomContainer}>
+          <Button style={styles.buttonStyle} onPress={onPressLogin}>
+            <Text weight="medium" style={styles.buttonText}>
+              Masuk
+            </Text>
+          </Button>
+        </View>
       </View>
-      <View style={styles.bottomContainer}>
-        <Button style={styles.buttonStyle} onPress={onPressLogin}>
-          <Text weight="medium" style={styles.buttonText}>
-            Masuk
-          </Text>
-        </Button>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

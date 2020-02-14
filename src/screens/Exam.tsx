@@ -154,8 +154,10 @@ export default function Exam() {
       </View>
       <ScrollView style={styles.body}>
         <View style={styles.soalContainer}>
+          <Text weight="medium" style={{ fontSize: FONT_SIZE.large }}>
+            {questionIndex + 1}.{'  '}
+          </Text>
           <Text weight="medium" style={styles.soal}>
-            {questionIndex + 1}.{' '}
             {dataQuestions?.questions[questionIndex].description}
           </Text>
         </View>
@@ -307,6 +309,8 @@ const styles = StyleSheet.create({
     height: 250,
   },
   soalContainer: {
+    flexDirection: 'row',
+    maxWidth: 380,
     paddingHorizontal: 24,
     paddingBottom: 24,
     borderBottomWidth: 1,
@@ -314,11 +318,13 @@ const styles = StyleSheet.create({
   },
   soal: {
     fontSize: FONT_SIZE.large,
+    textAlign: 'justify',
   },
   optionsContainer: {},
   buttonStyle: {
-    marginBottom: 36,
+    marginTop: 24,
     marginHorizontal: 24,
+    marginBottom: 36,
     backgroundColor: COLORS.primaryColor,
   },
   buttonText: {

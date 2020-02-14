@@ -13,13 +13,14 @@ import {
   OtherProfile,
   EditProfile,
   About,
-  AvatarCollection,
+  Shop,
   BadgeCollection,
   ChoosePaket,
   Exam,
   Result,
   Review,
   ChangePassword,
+  TutorialExam,
 } from '../screens';
 
 const AuthStack = createStackNavigator({
@@ -93,8 +94,8 @@ const AppStack = createStackNavigator(
         headerShown: false,
       },
     },
-    AvatarCollection: {
-      screen: AvatarCollection,
+    Shop: {
+      screen: Shop,
       navigationOptions: {
         headerShown: false,
       },
@@ -107,6 +108,12 @@ const AppStack = createStackNavigator(
     },
     ChoosePaket: {
       screen: ChoosePaket,
+      navigationOptions: {
+        headerShown: false,
+      },
+    },
+    TutorialExam: {
+      screen: TutorialExam,
       navigationOptions: {
         headerShown: false,
       },

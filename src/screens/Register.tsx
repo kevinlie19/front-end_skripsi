@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {
   Text,
   TextInput,
@@ -35,12 +41,21 @@ export default function RegisterScene() {
       setPasswordValue('');
       setRePasswordValue('');
     },
-    onError() {
-      Alert.alert(
-        'Alamat Email atau Kata Sandi Salah',
-        'Mohon Mencoba Kembali',
-        [{ text: 'OK' }],
-      );
+    onError(error) {
+      if (error.message === 'GraphQL error: Email already exists') {
+        Alert.alert('Alamat Email Sudah Digunakan', 'Mohon Mencoba Kembali', [
+          { text: 'OK' },
+        ]);
+      } else {
+        Alert.alert(
+          'Terjadi Kesalahan Yang Tidak Diketahui',
+          'Mohon Mencoba Kembali',
+          [{ text: 'OK' }],
+          {
+            cancelable: false,
+          },
+        );
+      }
     },
   });
 
@@ -51,6 +66,7 @@ export default function RegisterScene() {
           name: nameValue,
           email: emailValue,
           password: passwordValue,
+          avatarId: 'ck6rb0dqthqz60b09gbl4txll',
         },
       });
     } else if (!validateEmail(emailValue)) {
@@ -83,80 +99,84 @@ export default function RegisterScene() {
   };
 
   return (
-    <View style={styles.flex}>
-      <Portal>
-        <Modal
-          contentContainerStyle={styles.modal}
-          animationType="fade"
-          visible={loadingRegister}
-        >
-          <ActivityIndicator size="large" color={COLORS.primaryColor} />
-        </Modal>
-      </Portal>
-      <View style={styles.body}>
-        <View style={styles.navbar}>
-          <View />
-          <Text weight="medium" style={styles.title}>
-            Daftar
-          </Text>
-          <Text
-            weight="bold"
-            style={styles.masukText}
-            onPress={() => navigate('Login')}
+    <KeyboardAvoidingView behavior="padding" enabled style={styles.flex}>
+      <View style={styles.flex}>
+        <Portal>
+          <Modal
+            contentContainerStyle={styles.modal}
+            animationType="fade"
+            visible={loadingRegister}
           >
-            Masuk
-          </Text>
+            <ActivityIndicator size="large" color={COLORS.primaryColor} />
+          </Modal>
+        </Portal>
+        <View style={styles.body}>
+          <View style={styles.navbar}>
+            <View />
+            <Text weight="medium" style={styles.title}>
+              Daftar
+            </Text>
+            <Text
+              weight="bold"
+              style={styles.masukText}
+              onPress={() => navigate('Login')}
+            >
+              Masuk
+            </Text>
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <TextInput
+              mode="flat"
+              style={styles.flex}
+              containerStyle={styles.textInput}
+              label="Nama"
+              value={nameValue}
+              onChangeText={setNameValue}
+              autoFocus={true}
+              autoCapitalize="words"
+            />
+            <TextInput
+              mode="flat"
+              style={styles.flex}
+              containerStyle={styles.textInput}
+              label="Alamat Email"
+              value={emailValue}
+              onChangeText={setEmailValue}
+              textContentType="emailAddress"
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+            <TextInput
+              mode="flat"
+              style={styles.flex}
+              containerStyle={styles.textInput}
+              label="Kata Sandi"
+              value={passwordValue}
+              onChangeText={setPasswordValue}
+              textContentType="password"
+              secureTextEntry={true}
+            />
+            <TextInput
+              mode="flat"
+              style={styles.flex}
+              containerStyle={styles.textInput}
+              label="Ulangi Kata Sandi"
+              value={rePasswordValue}
+              onChangeText={setRePasswordValue}
+              textContentType="password"
+              secureTextEntry={true}
+            />
+          </ScrollView>
         </View>
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Nama"
-          value={nameValue}
-          onChangeText={setNameValue}
-          autoFocus={true}
-          autoCapitalize="words"
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Alamat Email"
-          value={emailValue}
-          onChangeText={setEmailValue}
-          textContentType="emailAddress"
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Kata Sandi"
-          value={passwordValue}
-          onChangeText={setPasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
-        <TextInput
-          mode="flat"
-          style={styles.flex}
-          containerStyle={styles.textInput}
-          label="Ulangi Kata Sandi"
-          value={rePasswordValue}
-          onChangeText={setRePasswordValue}
-          textContentType="password"
-          secureTextEntry={true}
-        />
+        <View style={styles.bottomContainer}>
+          <Button style={styles.buttonStyle} onPress={onPressRegister}>
+            <Text weight="medium" style={styles.buttonText}>
+              Buat Akun Baru
+            </Text>
+          </Button>
+        </View>
       </View>
-      <View style={styles.bottomContainer}>
-        <Button style={styles.buttonStyle} onPress={onPressRegister}>
-          <Text weight="medium" style={styles.buttonText}>
-            Buat Akun Baru
-          </Text>
-        </Button>
-      </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

@@ -23,7 +23,7 @@ export default function ChoosePaket() {
         {
           text: 'Mulai',
           onPress: () =>
-            navigate('Exam', { paket: paketValue, category: category }),
+            navigate('TutorialExam', { paket: paketValue, category: category }),
         },
       ],
       { cancelable: false },

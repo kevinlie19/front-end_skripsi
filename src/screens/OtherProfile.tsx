@@ -58,15 +58,23 @@ export default function OtherProfileScene() {
         <Text weight="medium" style={styles.title}>
           Profil {data.otherProfile.name}
         </Text>
-        <Text weight="medium" style={styles.point}>
-          {data.otherProfile.highestScore / 10} pts
-        </Text>
+        <View style={styles.flex}>
+          <Text weight="medium" style={styles.point}>
+            Nilai : {data.otherProfile.highestScore / 10}
+          </Text>
+          <View style={styles.userInfo}>
+            <View style={styles.yellowCoin} />
+            <Text weight="medium" style={styles.koin}>
+              {data.otherProfile.point}
+            </Text>
+          </View>
+        </View>
       </View>
       <View style={styles.profileInfoContainer}>
         <Avatar.Image
           style={styles.avatar}
           source={AllAvatars[Number(data.otherProfile.avatar?.image ?? 0)].src}
-          onPress={() => navigate('AvatarCollection')}
+          onPress={() => navigate('Shop')}
         />
         <View style={styles.flex}>
           <Text weight="medium" style={styles.fontMedium}>
@@ -74,7 +82,7 @@ export default function OtherProfileScene() {
           </Text>
           <Text style={styles.dateRegister}>{data.otherProfile.email}</Text>
           <Text style={styles.dateRegister}>
-            Registered on{' '}
+            Terdaftar Sejak{' '}
             {dateFormat(data.otherProfile.createdAt, 'dd/mm/yyyy')}
           </Text>
         </View>
@@ -282,6 +290,18 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     maxWidth: 250,
   },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  yellowCoin: {
+    width: 10,
+    height: 10,
+    backgroundColor: COLORS.gold,
+    borderRadius: 5,
+    marginRight: 8,
+  },
   navbar: {
     marginTop: 25,
     paddingLeft: 8,
@@ -309,8 +329,13 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
   },
   point: {
-    flex: 1,
     color: COLORS.primaryColor,
+    fontSize: FONT_SIZE.medium,
+    textAlign: 'right',
+  },
+  koin: {
+    paddingBottom: 2,
+    color: COLORS.gold,
     fontSize: FONT_SIZE.medium,
     textAlign: 'right',
   },

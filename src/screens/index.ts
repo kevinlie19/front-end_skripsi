@@ -9,10 +9,11 @@ import MyProfile from './MyProfile';
 import OtherProfile from './OtherProfile';
 import EditProfile from './EditProfile';
 import ChangePassword from './ChangePassword';
-import AvatarCollection from './AvatarCollection';
+import Shop from './Shop';
 import BadgeCollection from './BadgeCollection';
 import About from './About';
 import ChoosePaket from './ChoosePaket';
+import TutorialExam from './TutorialExam';
 import Exam from './Exam';
 import Result from './Result';
 import Review from './Review';
@@ -29,10 +30,11 @@ export {
   OtherProfile,
   EditProfile,
   ChangePassword,
-  AvatarCollection,
+  Shop,
   BadgeCollection,
   About,
   ChoosePaket,
+  TutorialExam,
   Exam,
   Result,
   Review,

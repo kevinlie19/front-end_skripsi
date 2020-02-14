@@ -52,7 +52,7 @@ export default function BadgeCollection() {
         <View style={styles.flex} />
       </View>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <Avatar.Image
             style={kondisiSatu ? styles.avatar : styles.lockedAvatar}
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   navbar: {
     marginTop: 35,
     paddingLeft: 8,
-    marginBottom: 24,
+    marginBottom: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

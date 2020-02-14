@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,18 +6,29 @@ import {
   StyleProp,
   ViewStyle,
   Image,
+  Animated,
 } from 'react-native';
 import { Text, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 
 import { COLORS } from '../constants/colors';
-import { FONT_SIZE } from '../constants/fonts';
 import { useDimensions } from '../helpers/useDimensions';
 
 export default function Welcome() {
   let { navigate } = useNavigation();
   let widthScreen = useDimensions();
+
   let src = require('../../assets/images/welcome.png');
+
+  const [fadeAnim] = useState(new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      delay: 500,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   let buttonDefaultStyle = {
     minWidth: 120,
@@ -29,35 +40,33 @@ export default function Welcome() {
   } as StyleProp<ViewStyle>;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.body}>
-        <Text weight="bold" style={styles.title}>
-          NAME
-        </Text>
+    <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.body}>
+          <Image source={src} style={styles.imageWelcome} />
+        </View>
 
-        <Image source={src} style={styles.imageWelcome} />
-      </View>
-
-      <View style={styles.bottomContainer}>
-        <Button
-          contentStyle={buttonDefaultStyle}
-          onPress={() => navigate('Login')}
-        >
-          <Text weight="bold" style={styles.buttonText}>
-            Masuk
-          </Text>
-        </Button>
-        <View style={styles.buttonSeparator} />
-        <Button
-          contentStyle={buttonDefaultStyle}
-          onPress={() => navigate('Register')}
-        >
-          <Text weight="bold" style={styles.buttonText}>
-            Daftar
-          </Text>
-        </Button>
-      </View>
-    </SafeAreaView>
+        <View style={styles.bottomContainer}>
+          <Button
+            contentStyle={buttonDefaultStyle}
+            onPress={() => navigate('Login')}
+          >
+            <Text weight="bold" style={styles.buttonText}>
+              Masuk
+            </Text>
+          </Button>
+          <View style={styles.buttonSeparator} />
+          <Button
+            contentStyle={buttonDefaultStyle}
+            onPress={() => navigate('Register')}
+          >
+            <Text weight="bold" style={styles.buttonText}>
+              Daftar
+            </Text>
+          </Button>
+        </View>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 
@@ -72,14 +81,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  title: {
-    marginBottom: 70,
-    fontSize: FONT_SIZE.xLarge,
-  },
+
   imageWelcome: {
-    aspectRatio: 1,
-    width: 250,
-    height: undefined,
+    width: 420,
+    height: 420,
   },
   bottomContainer: {
     marginBottom: 16,

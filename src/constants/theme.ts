@@ -24,8 +24,8 @@ const FontTheme = {
 
 export const ColorTheme = {
   ...DefaultTheme.colors,
-  primary: COLORS.grapefruit,
-  error: COLORS.grapefruit,
+  primary: COLORS.primaryColor,
+  error: COLORS.primaryColor,
   white: COLORS.white,
   placeHolder: COLORS.darkGrey,
   black: COLORS.black,

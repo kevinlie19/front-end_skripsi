@@ -17,7 +17,7 @@ const authLink = setContext(async (_, { headers }) => {
   };
 });
 const uploadLink = createUploadLink({
-  uri: 'our staging link',
+  uri: 'https://back-end-skripsi.herokuapp.com/',
   credentials: 'same-origin',
 });
 const link = ApolloLink.from([authLink, uploadLink]);

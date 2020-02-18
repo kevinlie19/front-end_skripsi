@@ -1,9 +1,39 @@
-import { Home } from '../screens';
+import {
+  Splash,
+  Welcome,
+  Login,
+  Register,
+  Home,
+  Leaderboard,
+  MyProfile,
+  OtherProfile,
+  EditProfile,
+  Shop,
+  BadgeCollection,
+  About,
+  ChoosePaket,
+  Exam,
+  Result,
+} from '../screens';
 
-const initialRoute = 'Home';
+const initialRoute = 'Splash';
 
 const routes = {
+  Splash,
+  Welcome,
+  Login,
+  Register,
   Home,
+  Leaderboard,
+  MyProfile,
+  OtherProfile,
+  EditProfile,
+  Shop,
+  BadgeCollection,
+  About,
+  ChoosePaket,
+  Exam,
+  Result,
 };
 
 export { initialRoute, routes };

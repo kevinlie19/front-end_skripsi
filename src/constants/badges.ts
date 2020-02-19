@@ -10,12 +10,12 @@ export const Badges = [
     src: require('../../assets/badges/MaleNerd.png'),
   },
   {
-    name: 'Siswa Sempurna',
+    name: 'Siswa/i Sempurna',
     description: 'Telah Menyelesaikan Semua Paket Dengan Nilai 100',
     src: require('../../assets/badges/University.png'),
   },
   {
-    name: 'Siswa Yang Siap Lulus',
+    name: 'Siswa/i Yang Siap Lulus',
     description: 'Telah Menyelesaikan Suatu Paket Dengan Nilai Lebih Dari 60',
     src: require('../../assets/badges/Graduation.png'),
   },

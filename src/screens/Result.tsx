@@ -154,7 +154,11 @@ export default function Result() {
           <Text weight="medium">{koin}</Text>
         </View>
         <Button
-          style={styles.buttonStyle}
+          style={
+            loadingUpdateProfile || loadingUpdateProgress
+              ? styles.disabledButtonStyle
+              : styles.buttonStyle
+          }
           onPress={onPressHome}
           loading={loadingUpdateProfile || loadingUpdateProgress}
           disabled={loadingUpdateProfile || loadingUpdateProgress}
@@ -214,6 +218,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 24,
     marginBottom: 36,
     backgroundColor: COLORS.primaryColor,
+  },
+  disabledButtonStyle: {
+    marginTop: 24,
+    marginHorizontal: 24,
+    marginBottom: 36,
+    backgroundColor: COLORS.darkGrey,
   },
   buttontext: {
     color: COLORS.white,

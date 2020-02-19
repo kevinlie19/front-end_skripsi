@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19004,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19002,
-  "packagerPid": 89838,
-  "expoServerNgrokUrl": "https://4g-3xq.kfox.front-end-skripsi.exp.direct",
-  "packagerNgrokUrl": "https://packager.4g-3xq.kfox.front-end-skripsi.exp.direct",
-  "ngrokPid": 89847
+  "packagerPort": 19003,
+  "packagerPid": 98411,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

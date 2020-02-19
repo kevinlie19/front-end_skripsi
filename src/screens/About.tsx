@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { Text, IconButton } from 'exoflex';
 import { useNavigation } from 'naviflex';
 
@@ -27,7 +27,7 @@ export default function About() {
         </Text>
         <View style={styles.flex} />
       </View>
-      <View style={styles.body}>
+      <ScrollView style={styles.body}>
         <View>
           <View style={styles.imageContainer}>
             <Image source={imageSrc} style={styles.imageSukun} />
@@ -43,7 +43,7 @@ export default function About() {
         <Text weight="medium" style={styles.text}>
           Made By Kevin Lie - 00000012876
         </Text>
-      </View>
+      </ScrollView>
     </View>
   );
 }

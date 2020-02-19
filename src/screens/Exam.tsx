@@ -134,7 +134,13 @@ export default function Exam() {
       </Portal>
       <View style={styles.navbar}>
         <View style={styles.backIconContainer}>
-          <CountdownTimer />
+          <CountdownTimer
+            showDurationLeft={(duration) => {
+              if (duration === 0) {
+                navigate('Result', { answers, category, paket });
+              }
+            }}
+          />
         </View>
         <Text weight="medium" style={styles.title}>
           {paket}

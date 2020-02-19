@@ -143,7 +143,7 @@ export default function Exam() {
                 Kamu tidak menjawab soal ini!
               </Text>
               <View style={styles.review}>
-                <Text>Kunci jawabannya adalah </Text>
+                <Text>Kunci jawabannya : </Text>
                 <Text weight="medium">{`"${correctAnswer &&
                   correctAnswer[0].answer}"`}</Text>
               </View>
@@ -221,8 +221,8 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZE.large,
   },
   review: {
-    flexDirection: 'row',
-    paddingTop: 5,
+    paddingTop: 10,
+    maxWidth: 380,
   },
   optionsContainer: {},
 });

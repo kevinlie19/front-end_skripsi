@@ -6,7 +6,7 @@ import { COLORS } from '../constants/colors';
 type TimeoutID = number;
 
 type Props = {
-  from?: string;
+  showDurationLeft: (duration: number) => void;
 };
 
 const UPDATE_RATE = 1000;
@@ -33,26 +33,22 @@ function getTimeLeft(millisecondsLeft: number) {
 }
 
 export default function CountdownTimer(props: Props) {
-  let { from } = props;
-  let [durationLeft, setDurationLeft] = useState(7200000);
+  let { showDurationLeft } = props;
+  let [durationLeft, setDurationLeft] = useState(5000);
 
   useEffect(() => {
     let updateDuration = () => {
-      if (durationLeft === 0) {
-        return () => clearInterval(timeout);
-      }
-
-      if (from === 'Result') {
-        setDurationLeft(0);
-      } else {
-        setDurationLeft((durationLeft) => Math.max(durationLeft - 1000, 0));
-      }
+      setDurationLeft((durationLeft) => Math.max(durationLeft - 1000, 0));
     };
+
+    if (durationLeft === 0) {
+      showDurationLeft(durationLeft);
+    }
 
     let timeout: TimeoutID = setInterval(updateDuration, UPDATE_RATE);
 
     return () => clearInterval(timeout);
-  }, [from]);
+  }, [durationLeft]);
 
   let { hoursLeft, minutesLeft, secondsLeft } = getTimeLeft(durationLeft);
 

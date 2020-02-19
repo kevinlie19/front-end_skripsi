@@ -351,7 +351,14 @@ const styles = StyleSheet.create({
   },
   avatar: {
     backgroundColor: COLORS.white,
-    marginRight: 60,
+    marginLeft: 24,
+    marginRight: 16,
+  },
+  lockedAvatar: {
+    opacity: 0.5,
+    marginLeft: 24,
+    marginRight: 16,
+    backgroundColor: COLORS.white,
   },
   fontMedium: {
     fontSize: FONT_SIZE.medium,
@@ -370,12 +377,6 @@ const styles = StyleSheet.create({
   menuIcon: {
     paddingTop: 3,
     marginLeft: 8,
-  },
-  lockedAvatar: {
-    opacity: 0.5,
-    marginLeft: 24,
-    marginRight: 16,
-    backgroundColor: COLORS.white,
   },
   contentContainer: {
     height: 96,

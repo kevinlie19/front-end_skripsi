@@ -141,6 +141,9 @@ export default function Shop() {
                         <ActivityIndicator />
                       ) : (
                         <IconButton
+                          disabled={
+                            loadingUpdateProfile || loadingAddToAvatarCollection
+                          }
                           icon="check-circle-outline"
                           color={COLORS.gold}
                           style={styles.icon}
@@ -149,6 +152,9 @@ export default function Shop() {
                     </View>
                   ) : (
                     <TouchableOpacity
+                      disabled={
+                        loadingUpdateProfile || loadingAddToAvatarCollection
+                      }
                       style={styles.buyTextContainer}
                       onPress={() => {
                         onEquipAvatar(item.id);
@@ -165,6 +171,9 @@ export default function Shop() {
                   )
                 ) : (
                   <TouchableOpacity
+                    disabled={
+                      loadingUpdateProfile || loadingAddToAvatarCollection
+                    }
                     style={styles.buyTextContainer}
                     onPress={() => {
                       onBuyAvatar(item.id, item.price);

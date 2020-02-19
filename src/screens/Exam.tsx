@@ -46,6 +46,7 @@ export default function Exam() {
       setQuestionIndex(questionIndex + 1);
     } else {
       setQuestionIndex(questionIndex);
+      navigate('Result', { answers, category, paket });
     }
   };
 

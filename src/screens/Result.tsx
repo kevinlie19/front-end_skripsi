@@ -157,6 +157,7 @@ export default function Result() {
           style={styles.buttonStyle}
           onPress={onPressHome}
           loading={loadingUpdateProfile || loadingUpdateProgress}
+          disabled={loadingUpdateProfile || loadingUpdateProgress}
         >
           <Text weight="medium" style={styles.buttontext}>
             Kembali ke Beranda

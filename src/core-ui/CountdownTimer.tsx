@@ -34,7 +34,7 @@ function getTimeLeft(millisecondsLeft: number) {
 
 export default function CountdownTimer(props: Props) {
   let { showDurationLeft } = props;
-  let [durationLeft, setDurationLeft] = useState(5000);
+  let [durationLeft, setDurationLeft] = useState(7200000);
 
   useEffect(() => {
     let updateDuration = () => {

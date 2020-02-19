@@ -1,5 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import { View, StyleSheet, Alert, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useCallback, useRef } from 'react';
+import {
+  View,
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  TextInput as TextInputType,
+} from 'react-native';
 import {
   Text,
   TextInput,
@@ -23,6 +29,8 @@ export default function LoginScene() {
   let { navigate } = useNavigation();
   let [emailValue, setEmailValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
+
+  let passwordRef = useRef<TextInputType>(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -132,6 +140,10 @@ export default function LoginScene() {
             autoCapitalize="none"
             autoFocus={true}
             keyboardType="email-address"
+            onSubmitEditing={() => {
+              passwordRef.current && passwordRef.current.focus();
+            }}
+            returnKeyType="next"
           />
           <TextInput
             mode="flat"
@@ -142,6 +154,8 @@ export default function LoginScene() {
             onChangeText={setPasswordValue}
             textContentType="password"
             secureTextEntry={true}
+            returnKeyType="done"
+            ref={passwordRef}
           />
         </View>
         <View style={styles.bottomContainer}>

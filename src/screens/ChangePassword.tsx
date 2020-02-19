@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Alert, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useRef } from 'react';
+import {
+  StyleSheet,
+  View,
+  Alert,
+  KeyboardAvoidingView,
+  TextInput as TextInputType,
+} from 'react-native';
 import { Text, IconButton, TextInput, Button } from 'exoflex';
 import { useNavigation } from 'naviflex';
 import { useMutation, useQuery } from '@apollo/react-hooks';
@@ -23,6 +29,9 @@ export default function ChangePassword() {
   let [oldPasswordValue, setOldPasswordValue] = useState('');
   let [passwordValue, setPasswordValue] = useState('');
   let [repeatPasswordValue, setRepeatPasswordValue] = useState('');
+
+  let passwordRef = useRef<TextInputType>(null);
+  let rePasswordRef = useRef<TextInputType>(null);
 
   let { loading, data } = useQuery<MyProfile>(MY_PROFILE, {
     fetchPolicy: 'cache-and-network',
@@ -116,6 +125,11 @@ export default function ChangePassword() {
             onChangeText={setOldPasswordValue}
             textContentType="password"
             secureTextEntry={true}
+            autoFocus={true}
+            onSubmitEditing={() => {
+              passwordRef.current && passwordRef.current.focus();
+            }}
+            returnKeyType="next"
           />
           <TextInput
             mode="flat"
@@ -126,6 +140,11 @@ export default function ChangePassword() {
             onChangeText={setPasswordValue}
             textContentType="password"
             secureTextEntry={true}
+            ref={passwordRef}
+            onSubmitEditing={() => {
+              rePasswordRef.current && rePasswordRef.current.focus();
+            }}
+            returnKeyType="next"
           />
           <TextInput
             mode="flat"
@@ -136,6 +155,8 @@ export default function ChangePassword() {
             onChangeText={setRepeatPasswordValue}
             textContentType="password"
             secureTextEntry={true}
+            ref={rePasswordRef}
+            returnKeyType="done"
           />
         </View>
         <View style={styles.bottomContainer}>

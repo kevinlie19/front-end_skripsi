@@ -74,23 +74,20 @@ export default function Result() {
       await updateProgress({
         variables: {
           Paket1:
-            category === 'Paket1'
-              ? dataProfile?.myProfile.progress.Paket1 > score
-                ? score * 10
-                : dataProfile?.myProfile.progress.Paket1
-              : dataProfile?.myProfile.progress.Paket1,
+            category === 'Paket1' &&
+            dataProfile.myProfile.progress.Paket1 / 10 < score
+              ? score * 10
+              : dataProfile.myProfile.progress.Paket1,
           Paket2:
-            category === 'Paket2'
-              ? dataProfile?.myProfile.progress.Paket2 > score
-                ? score * 10
-                : dataProfile?.myProfile.progress.Paket2
-              : dataProfile?.myProfile.progress.Paket2,
+            category === 'Paket2' &&
+            dataProfile.myProfile.progress.Paket2 / 10 < score
+              ? score * 10
+              : dataProfile.myProfile.progress.Paket2,
           Paket3:
-            category === 'Paket3'
-              ? dataProfile?.myProfile.progress.Paket3 > score
-                ? score * 10
-                : dataProfile?.myProfile.progress.Paket3
-              : dataProfile?.myProfile.progress.Paket3,
+            category === 'Paket3' &&
+            dataProfile.myProfile.progress.Paket3 / 10 < score
+              ? score * 10
+              : dataProfile.myProfile.progress.Paket3,
         },
       });
     }

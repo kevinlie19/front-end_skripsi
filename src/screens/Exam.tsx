@@ -317,7 +317,8 @@ const styles = StyleSheet.create({
   },
   soalContainer: {
     flexDirection: 'row',
-    maxWidth: 380,
+    flex: 1,
+    marginRight: 24,
     paddingHorizontal: 24,
     paddingBottom: 24,
     borderBottomWidth: 1,
